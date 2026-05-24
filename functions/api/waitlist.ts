@@ -10,6 +10,31 @@ interface Env {
   SUPABASE_URL: string;
   SUPABASE_SERVICE_ROLE_KEY: string;
   RESEND_API_KEY?: string;
+  TURNSTILE_SECRET_KEY?: string;
+}
+
+async function verifyTurnstile(
+  secret: string,
+  token: string | null | undefined,
+  ip: string | null,
+): Promise<boolean> {
+  if (!token) return false;
+  const form = new URLSearchParams({
+    secret,
+    response: token,
+    ...(ip ? { remoteip: ip } : {}),
+  });
+  try {
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: form.toString(),
+    });
+    const data = (await res.json()) as { success: boolean };
+    return data.success === true;
+  } catch {
+    return false;
+  }
 }
 
 const SEED = 1200;
@@ -133,6 +158,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const note = body.note ? String(body.note).trim().slice(0, 160) : null;
   const source = body.source ? String(body.source).slice(0, 120) : "/";
   const referredBy = body.referredBy ? String(body.referredBy).slice(0, 32) : null;
+  const turnstileToken = body.turnstileToken ? String(body.turnstileToken) : null;
   const hp = body.hp ? String(body.hp) : "";
 
   if (hp) {
@@ -140,6 +166,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
   if (!email || !emailRe.test(email)) {
     return Response.json({ error: "Please enter a valid email." }, { status: 400 });
+  }
+
+  // Turnstile is enforced only if a secret is configured. Without secret —
+  // skipped (dev / initial setup). With secret — required and verified.
+  if (env.TURNSTILE_SECRET_KEY) {
+    const ip = request.headers.get("CF-Connecting-IP");
+    const ok = await verifyTurnstile(env.TURNSTILE_SECRET_KEY, turnstileToken, ip);
+    if (!ok) {
+      return Response.json(
+        { error: "Captcha verification failed. Please reload the page and try again." },
+        { status: 403 },
+      );
+    }
   }
 
   const result = await insertSupabase(env, { email, name, note, source, referredBy });

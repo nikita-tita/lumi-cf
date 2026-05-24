@@ -1,8 +1,24 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, useRef, FormEvent } from "react";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Script from "next/script";
+import { track } from "@/components/Analytics";
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        el: HTMLElement,
+        opts: { sitekey: string; callback: (token: string) => void; theme?: string },
+      ) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
 
 type State =
   | { kind: "idle" }
@@ -21,6 +37,9 @@ export function WaitlistForm({
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
   const [state, setState] = useState<State>({ kind: "idle" });
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -29,6 +48,28 @@ export function WaitlistForm({
     const ref = params.get("ref");
     if (ref) {
       document.cookie = `lumi_ref=${encodeURIComponent(ref)}; path=/; max-age=${60 * 60 * 24 * 30}`;
+    }
+  }, []);
+
+  // Render Turnstile widget when script is ready and key is configured
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileRef.current) return;
+    const tryRender = () => {
+      if (window.turnstile && turnstileRef.current && !widgetIdRef.current) {
+        widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY!,
+          theme: "dark",
+          callback: (token: string) => setTurnstileToken(token),
+        });
+        return true;
+      }
+      return false;
+    };
+    if (!tryRender()) {
+      const interval = setInterval(() => {
+        if (tryRender()) clearInterval(interval);
+      }, 200);
+      return () => clearInterval(interval);
     }
   }, []);
 
@@ -51,17 +92,32 @@ export function WaitlistForm({
           note: note || null,
           source: pathname || "/",
           referredBy,
+          turnstileToken,
           hp: "", // honeypot
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
       setState({ kind: "success", position: data.position, refCode: data.refCode });
+      track("waitlist_submitted", {
+        source: pathname || "/",
+        position: data.position,
+        duplicate: !!data.duplicate,
+      });
     } catch (err) {
       setState({
         kind: "error",
         message: err instanceof Error ? err.message : "Something went wrong.",
       });
+      track("waitlist_error", {
+        source: pathname || "/",
+        message: err instanceof Error ? err.message : String(err),
+      });
+      // Reset Turnstile after error so user can retry
+      if (TURNSTILE_SITE_KEY && window.turnstile && widgetIdRef.current) {
+        window.turnstile.reset(widgetIdRef.current);
+        setTurnstileToken(null);
+      }
     }
   }
 
@@ -111,6 +167,7 @@ export function WaitlistForm({
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onFocus={() => track("waitlist_form_focused", { source: pathname || "/" })}
           placeholder="you@example.com"
           className="input-dark flex-1 rounded-btn px-4 py-3 text-sm"
           autoComplete="email"
@@ -165,6 +222,17 @@ export function WaitlistForm({
         className="hidden"
         aria-hidden="true"
       />
+
+      {/* Cloudflare Turnstile (loads script + container only when site key is configured) */}
+      {TURNSTILE_SITE_KEY && (
+        <>
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+            strategy="afterInteractive"
+          />
+          <div ref={turnstileRef} className="mt-3" />
+        </>
+      )}
 
       <p className="text-xs text-text-mute mt-3">
         No spam. We&apos;ll email you twice: once when beta opens, once when we launch.
