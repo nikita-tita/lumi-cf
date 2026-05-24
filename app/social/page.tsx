@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     "Download Lumi, follow on social, or support Lumi Pro. All in one place.",
   // Link-in-bio is a standalone brand moment — hide from sitemap/indexing
   robots: { index: false, follow: true },
+  alternates: { canonical: "https://lumi.estate/social" },
 };
 
 type LinkItem = {

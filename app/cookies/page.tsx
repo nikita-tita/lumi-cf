@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -7,11 +8,13 @@ export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
     "How Lumi uses cookies and similar technologies. Complies with EU ePrivacy Directive, GDPR, UK PECR, Brazil LGPD and Mexico LFPDPPP.",
+  alternates: { canonical: "https://lumi.estate/cookies" },
 };
 
 export default function CookiesPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Cookies", url: "/cookies" }]} />
       <PageHeader
         eyebrow="Legal"
         title="Cookie policy."

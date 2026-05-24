@@ -31,3 +31,34 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=lumi --branch=main
+
+      - name: Smoke test
+        env:
+          APEX_URL: "https://lumi.estate/"
+          WAITLIST_URL: "https://lumi.estate/api/waitlist"
+        run: |
+          set -e
+          # CF Pages needs ~20-30s to propagate after deploy completes
+          sleep 30
+
+          echo "-> apex"
+          code=$(curl -s -o /dev/null -m 15 -w "%{http_code}" "$APEX_URL")
+          if [ "$code" != "200" ]; then
+            echo "FAIL: apex returned HTTP $code"
+            exit 1
+          fi
+
+          echo "-> waitlist GET"
+          body=$(curl -s -m 15 "$WAITLIST_URL")
+          if echo "$body" | grep -q '"degraded":true'; then
+            echo "FAIL: waitlist API is in degraded mode (Supabase down?)"
+            echo "Response: $body"
+            exit 1
+          fi
+          if ! echo "$body" | grep -q '"count"'; then
+            echo "FAIL: waitlist API returned unexpected body"
+            echo "Response: $body"
+            exit 1
+          fi
+
+          echo "smoke test passed"

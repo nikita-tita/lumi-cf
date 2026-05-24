@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Quote } from "lucide-react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Research",
   description:
     "Sixty real estate agents. Three recurring pains. Why we built Lumi.",
+  alternates: { canonical: "https://lumi.estate/research" },
 };
 
 const pains = [
@@ -32,6 +34,7 @@ const pains = [
 export default function ResearchPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Research", url: "/research" }]} />
       <PageHeader
         eyebrow="Research"
         title="Sixty agents. Three pains. One app."

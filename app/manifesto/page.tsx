@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -8,11 +9,13 @@ export const metadata: Metadata = {
   title: "Manifesto",
   description:
     "Agents don't need another CRM. They need an assistant that fits in a pocket. A short essay on why we're building Lumi.",
+  alternates: { canonical: "https://lumi.estate/manifesto" },
 };
 
 export default function ManifestoPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Manifesto", url: "/manifesto" }]} />
       <PageHeader
         eyebrow="Manifesto"
         title="Agents don't need another CRM."

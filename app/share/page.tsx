@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Copy and share your Lumi waitlist link. Every agent who joins from your link moves you up.",
   robots: { index: false, follow: false },
+  alternates: { canonical: "https://lumi.estate/share" },
 };
 
 export default function SharePage() {

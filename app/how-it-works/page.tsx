@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "How it works",
   description:
     "Sixty seconds on how Lumi turns a showing into a logged lead, an updated pipeline, and a scheduled follow-up.",
+  alternates: { canonical: "https://lumi.estate/how-it-works" },
 };
 
 const steps = [
@@ -36,6 +38,7 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "How it works", url: "/how-it-works" }]} />
       <PageHeader
         eyebrow="How it works"
         title="Sixty seconds, four steps."

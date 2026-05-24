@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
   title: "Terms of Use",
   description: "Terms of use for the Lumi website and waitlist.",
+  alternates: { canonical: "https://lumi.estate/terms" },
 };
 
 export default function TermsPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Terms", url: "/terms" }]} />
       <PageHeader
         eyebrow="Legal"
         title="Terms of use."

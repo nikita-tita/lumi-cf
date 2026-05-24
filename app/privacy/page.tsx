@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -7,11 +8,13 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How Lumi collects, uses and protects your personal data. GDPR (EU/UK), LGPD (Brazil), LFPDPPP (Mexico), Argentine Law 25.326, and UAE PDPL compliant.",
+  alternates: { canonical: "https://lumi.estate/privacy" },
 };
 
 export default function PrivacyPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Privacy Policy", url: "/privacy" }]} />
       <PageHeader
         eyebrow="Legal"
         title="Privacy policy."

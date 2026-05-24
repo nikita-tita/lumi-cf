@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Heart, Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Lumi is free, forever. Lumi Pro is an optional donation from €5/month — patronage, not paywall. No feature-gating, no tricks.",
+  alternates: { canonical: "https://lumi.estate/pricing" },
 };
 
 const tiers = [
@@ -41,6 +43,7 @@ const faq = [
 export default function PricingPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Pricing", url: "/pricing" }]} />
       <PageHeader
         eyebrow="Pricing"
         title="Lumi is free. Forever."

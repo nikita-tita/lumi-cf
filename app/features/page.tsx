@@ -11,6 +11,7 @@ import {
   Globe,
   Bell,
 } from "lucide-react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const dynamic = 'force-static';
 
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   title: "Features",
   description:
     "Chat-first AI, deal pipeline that moves itself, Documents RAG with cited answers, voice capture, offline-first, multi-currency and eight languages. The full Lumi feature set.",
+  alternates: { canonical: "https://lumi.estate/features" },
 };
 
 const features = [
@@ -66,6 +68,7 @@ const features = [
 export default function FeaturesPage() {
   return (
     <>
+      <Breadcrumbs items={[{ name: "Features", url: "/features" }]} />
       <PageHeader
         eyebrow="Features"
         title="Chat is the interface. Everything else follows."
