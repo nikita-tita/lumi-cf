@@ -38,6 +38,12 @@ export const metadata: Metadata = {
       "Speak or type — showings get scheduled, your pipeline moves, documents answer themselves.",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-icon",
+  },
 };
 
 export const viewport: Viewport = {
