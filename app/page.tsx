@@ -1,0 +1,59 @@
+import { Hero } from "@/components/sections/Hero";
+import { Pillars } from "@/components/sections/Pillars";
+import { DayWithLumi } from "@/components/sections/DayWithLumi";
+import { Comparison } from "@/components/sections/Comparison";
+import { Personas } from "@/components/sections/Personas";
+import { Faq } from "@/components/sections/Faq";
+import { faqItems } from "@/components/sections/faq-data";
+import { FinalCta } from "@/components/sections/FinalCta";
+import { JsonLd } from "@/components/JsonLd";
+
+export const dynamic = 'force-static';
+
+export default function HomePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: "Lumi",
+        url: "https://lumi.estate",
+        logo: "https://lumi.estate/icon.png",
+        description:
+          "Lumi is the AI calendar and CRM built for real estate agents. Voice-first capture, offline pipeline, built-in deal tracking.",
+        foundingLocation: { "@type": "Place", name: "Helsinki, Finland" },
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: "Lumi",
+        applicationCategory: "BusinessApplication",
+        applicationSubCategory: "Real Estate CRM",
+        operatingSystem: "iOS, Android",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+        description:
+          "AI calendar and CRM for real estate agents. Capture showings by voice, keep your pipeline alive, never drop a follow-up.",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <Hero />
+      <Pillars />
+      <DayWithLumi />
+      <Comparison />
+      <Personas />
+      <Faq />
+      <FinalCta />
+    </>
+  );
+}

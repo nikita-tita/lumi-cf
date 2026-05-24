@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" viewBox="0 0 96 96" width="96" height="96">
+  <title>Lumi</title>
+  <defs>
+    <linearGradient id="lumi-bimi-g" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="0.5" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="96" height="96" rx="20" ry="20" fill="url(#lumi-bimi-g)"/>
+  <circle cx="48" cy="48" r="18" fill="#FFFFFF"/>
+  <circle cx="68" cy="28" r="7" fill="#FFFFFF"/>
+</svg>
