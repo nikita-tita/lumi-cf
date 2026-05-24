@@ -1,0 +1,2 @@
+# 301 www → apex (preserves path + query)
+https://www.lumi.estate/* https://lumi.estate/:splat 301!
