@@ -8,7 +8,8 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "next build && wrangler pages deploy out --project-name=lumi --branch=main"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",
