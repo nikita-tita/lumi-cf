@@ -29,7 +29,7 @@ export default function HomePage() {
         applicationCategory: "BusinessApplication",
         applicationSubCategory: "Real Estate CRM",
         operatingSystem: "iOS, Android",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+        offers: { "@type": "Offer", price: "9.00", priceCurrency: "EUR" },
         description:
           "AI calendar and CRM for real estate agents. Capture showings by voice, keep your pipeline alive, never drop a follow-up.",
       },

@@ -5,7 +5,7 @@ export const faqItems = [
   },
   {
     q: "How much will it cost?",
-    a: "Free forever. All features, no paywall. Lumi Pro is an optional donation — €5 to €50 per month, you pick the tier — that helps cover the ~€10–15/month it costs us to run one account in AI and infra. No feature-gating, ever.",
+    a: "€9/month after a 7-day free trial. One plan, everything included — chat, pipeline, Documents Q&A, offline mode. No tiers, no feature-gating, cancel anytime in App Store settings.",
   },
   {
     q: "Which regions and currencies are supported?",
