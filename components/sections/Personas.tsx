@@ -27,9 +27,9 @@ export function Personas() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 mt-14 border border-border rounded-card overflow-hidden bg-surface divide-y md:divide-y-0 md:divide-x divide-border">
+        <div className="grid md:grid-cols-3 mt-14 border border-border rounded-card overflow-hidden bg-white divide-y md:divide-y-0 md:divide-x divide-border">
           {personas.map((p) => (
-            <div key={p.title} className="p-8 hover:bg-bg transition-colors">
+            <div key={p.title} className="p-8 bg-white hover:bg-surface transition-colors">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-mute">
                 {p.tag}
               </p>

@@ -19,7 +19,7 @@ export function PackHero({
       className="relative isolate overflow-hidden min-h-[85vh] flex items-center"
       style={{
         background:
-          "#1F5738",
+          "#2563EB",
       }}
     >
       <div className="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-12 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center py-16 sm:py-20 lg:py-24">
@@ -33,7 +33,7 @@ export function PackHero({
             <span
               style={{
                 background:
-                  "#F6F2EA",
+                  "#FAFAFA",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -53,7 +53,7 @@ export function PackHero({
               "Free for agents in EU · LatAm · MENA.",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
-                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#C05B2E] flex-shrink-0" />
+                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
                 <span className="text-sm sm:text-base">{t}</span>
               </li>
             ))}
@@ -64,7 +64,7 @@ export function PackHero({
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "#C05B2E",
+                  "#D97706",
               }}
             >
               Join the waitlist →
@@ -110,7 +110,7 @@ export function PackBottomAd({
         className="absolute inset-0 -z-10 rounded-[28px] sm:rounded-[36px]"
         style={{
           background:
-            "#1F5738",
+            "#2563EB",
         }}
       />
       <div className="w-full px-6 sm:px-10 lg:px-14 py-14 sm:py-20 lg:py-24 rounded-[28px] sm:rounded-[36px] text-slate-100 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
@@ -124,7 +124,7 @@ export function PackBottomAd({
             <span
               style={{
                 background:
-                  "#F6F2EA",
+                  "#FAFAFA",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -143,7 +143,7 @@ export function PackBottomAd({
               "Free for agents in EU · LatAm · MENA",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
-                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#C05B2E] flex-shrink-0" />
+                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
                 <span className="text-sm sm:text-base">{t}</span>
               </li>
             ))}
@@ -154,7 +154,7 @@ export function PackBottomAd({
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "#C05B2E",
+                  "#D97706",
               }}
             >
               Join the waitlist

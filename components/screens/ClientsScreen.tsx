@@ -66,7 +66,7 @@ const STAGE_META: Record<
   },
   warm: {
     label: "Warm",
-    tint: "bg-[#EDF3EC]",
+    tint: "bg-[#EFF6FF]",
     text: "text-accent-2",
     dot: "bg-accent",
     Icon: Clock,
@@ -87,7 +87,7 @@ export function ClientsScreen() {
       title="Pipeline"
       headerAction={
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-semibold text-[#5C5343]">
+          <span className="text-[11px] font-semibold text-[#52525B]">
             €12.4M
           </span>
         </div>
@@ -95,9 +95,9 @@ export function ClientsScreen() {
     >
       {/* search */}
       <div className="px-5 pt-1 pb-2">
-        <div className="flex items-center gap-2 bg-[#EFE9DD] rounded-xl px-3 py-1.5">
-          <Search size={12} className="text-[#958976]" strokeWidth={2.4} />
-          <span className="text-[11px] text-[#958976]">
+        <div className="flex items-center gap-2 bg-[#F4F4F5] rounded-xl px-3 py-1.5">
+          <Search size={12} className="text-[#A1A1AA]" strokeWidth={2.4} />
+          <span className="text-[11px] text-[#A1A1AA]">
             Search clients, properties…
           </span>
         </div>
@@ -130,7 +130,7 @@ function StageChip({ stage, count }: { stage: Stage; count: number }) {
           {meta.label}
         </p>
       </div>
-      <p className="text-[15px] font-bold text-[#201B12] leading-tight tabular-nums">
+      <p className="text-[15px] font-bold text-[#09090B] leading-tight tabular-nums">
         {count}
       </p>
     </div>
@@ -154,7 +154,7 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             client.stage === "active"
               ? "linear-gradient(140deg, #34D399 0%, #10B981 100%)"
               : client.stage === "warm"
-                ? "linear-gradient(140deg, #818CF8 0%, #1F5738 100%)"
+                ? "linear-gradient(140deg, #818CF8 0%, #2563EB 100%)"
                 : "linear-gradient(140deg, #F87171 0%, #EF4444 100%)",
         }}
       >
@@ -162,7 +162,7 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="text-[12.5px] font-semibold text-[#201B12] truncate">
+          <h3 className="text-[12.5px] font-semibold text-[#09090B] truncate">
             {client.name}
           </h3>
           <span
@@ -171,24 +171,24 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             {meta.label}
           </span>
         </div>
-        <p className="mt-0.5 text-[10.5px] text-[#5C5343]">{client.budget}</p>
+        <p className="mt-0.5 text-[10.5px] text-[#52525B]">{client.budget}</p>
         <div className="mt-1.5 flex items-center gap-1.5">
           <Icon size={10} className={meta.text} strokeWidth={2.4} />
-          <p className="text-[10.5px] text-[#201B12] font-medium">
+          <p className="text-[10.5px] text-[#09090B] font-medium">
             {client.nextAction}
           </p>
         </div>
         {client.silenceDays !== undefined && (
-          <p className="mt-0.5 text-[9.5px] text-[#958976]">
+          <p className="mt-0.5 text-[9.5px] text-[#A1A1AA]">
             Silent {client.silenceDays}d · last {client.lastContact}
           </p>
         )}
       </div>
       <button
         type="button"
-        className="shrink-0 w-7 h-7 rounded-full bg-[#EFE9DD] flex items-center justify-center"
+        className="shrink-0 w-7 h-7 rounded-full bg-[#F4F4F5] flex items-center justify-center"
       >
-        <Phone size={12} className="text-[#5C5343]" strokeWidth={2.4} />
+        <Phone size={12} className="text-[#52525B]" strokeWidth={2.4} />
       </button>
     </motion.div>
   );

@@ -127,7 +127,7 @@ function PromoHero() {
       className="relative isolate overflow-hidden min-h-[85vh] flex items-center"
       style={{
         background:
-          "radial-gradient(120% 80% at 0% 0%, rgba(31,87,56,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(192,91,46,0.20), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
+          "radial-gradient(120% 80% at 0% 0%, rgba(37,99,235,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(217,119,6,0.20), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
       }}
     >
       <div className="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-12 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center py-16 sm:py-20 lg:py-24">
@@ -141,7 +141,7 @@ function PromoHero() {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #4A8465 0%, #4A8465 50%, #D08A6B 100%)",
+                  "linear-gradient(135deg, #60A5FA 0%, #60A5FA 50%, #FBBF24 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -172,7 +172,7 @@ function PromoHero() {
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "#1F5738",
+                  "#2563EB",
               }}
             >
               Join the waitlist →
@@ -208,7 +208,7 @@ function BottomAd() {
         className="absolute inset-0 -z-10 rounded-[28px] sm:rounded-[36px]"
         style={{
           background:
-            "radial-gradient(120% 80% at 0% 0%, rgba(31,87,56,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(192,91,46,0.22), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
+            "radial-gradient(120% 80% at 0% 0%, rgba(37,99,235,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(217,119,6,0.22), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
         }}
       />
       <div className="w-full px-6 sm:px-10 lg:px-14 py-14 sm:py-20 lg:py-24 rounded-[28px] sm:rounded-[36px] text-slate-100 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
@@ -222,7 +222,7 @@ function BottomAd() {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #4A8465 0%, #4A8465 50%, #D08A6B 100%)",
+                  "linear-gradient(135deg, #60A5FA 0%, #60A5FA 50%, #FBBF24 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -252,7 +252,7 @@ function BottomAd() {
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "#1F5738",
+                  "#2563EB",
               }}
             >
               Join the waitlist
@@ -314,7 +314,7 @@ function FieldBlock({
           className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center text-xl lg:text-2xl font-mono font-semibold text-white shadow-md"
           style={{
             background:
-              "#1F5738",
+              "#2563EB",
           }}
         >
           {String(index).padStart(2, "0")}
@@ -506,7 +506,7 @@ export default function PromptPage() {
           className="absolute inset-0 -z-10 opacity-70"
           style={{
             background:
-              "radial-gradient(50% 50% at 80% 0%, rgba(192,91,46,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(31,87,56,0.10), transparent)",
+              "radial-gradient(50% 50% at 80% 0%, rgba(217,119,6,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(37,99,235,0.10), transparent)",
           }}
         />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12">
@@ -519,7 +519,7 @@ export default function PromptPage() {
             <span
               style={{
                 background:
-                  "#1F5738",
+                  "#2563EB",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -692,7 +692,7 @@ last_touch:       2026-04-20  ·  WhatsApp voice`}
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white shadow-lg shadow-indigo-900/30 transition hover:translate-y-[-1px] whitespace-nowrap flex-shrink-0"
             style={{
               background:
-                "#1F5738",
+                "#2563EB",
             }}
           >
             Open Claude →
@@ -785,7 +785,7 @@ last_touch:       2026-04-20  ·  WhatsApp voice`}
                 className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-mono font-semibold text-white"
                 style={{
                   background:
-                    "#1F5738",
+                    "#2563EB",
                 }}
               >
                 {item.n}

@@ -15,8 +15,8 @@ export default async function JoinOpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#1F5738",
-          color: "#F6F2EA",
+          background: "#09090B",
+          color: "#FAFAFA",
         }}
       >
         <div

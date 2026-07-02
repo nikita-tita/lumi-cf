@@ -15,16 +15,16 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#F6F2EA",
-          color: "#201B12",
-          borderBottom: "16px solid #1F5738",
+          background: "#FAFAFA",
+          color: "#09090B",
+          borderBottom: "16px solid #2563EB",
         }}
       >
         <div
           style={{
             fontSize: 24,
             letterSpacing: 5,
-            color: "#1F5738",
+            color: "#2563EB",
             textTransform: "uppercase",
             marginBottom: 28,
             fontFamily: "monospace",
@@ -43,12 +43,12 @@ export default async function OpengraphImage() {
           }}
         >
           <div>Chat-first AI</div>
-          <div style={{ color: "#1F5738" }}>for real estate agents</div>
+          <div style={{ color: "#2563EB" }}>for real estate agents</div>
         </div>
         <div
           style={{
             fontSize: 28,
-            color: "#5C5343",
+            color: "#52525B",
             marginTop: 32,
             maxWidth: 900,
             lineHeight: 1.4,
@@ -63,7 +63,7 @@ export default async function OpengraphImage() {
             bottom: 52,
             right: 80,
             fontSize: 22,
-            color: "#958976",
+            color: "#A1A1AA",
             fontFamily: "monospace",
           }}
         >

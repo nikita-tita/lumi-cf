@@ -1,22 +1,22 @@
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
+    <div className={`flex items-center gap-2 ${className}`}>
       <svg
-        width="26"
-        height="26"
-        viewBox="0 0 26 26"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Sunrise over a sill — Lumi is light on your working day. */}
-        <rect width="26" height="26" rx="4" fill="#1F5738" />
-        <path d="M6 17.5a7 7 0 0 1 14 0Z" fill="#F6F2EA" />
-        <rect x="6" y="19.5" width="14" height="1.6" rx="0.8" fill="#F6F2EA" />
+        {/* Four-point spark — Lumi, light on your working day. */}
+        <rect width="24" height="24" rx="6" fill="#09090B" />
+        <path
+          d="M12 4.5 L13.9 10.1 L19.5 12 L13.9 13.9 L12 19.5 L10.1 13.9 L4.5 12 L10.1 10.1 Z"
+          fill="#FFFFFF"
+        />
       </svg>
-      <span className="font-display text-xl tracking-tight text-text">
-        Lumi<span className="text-accent">.</span>
-      </span>
+      <span className="font-display text-lg tracking-tight text-text">Lumi</span>
     </div>
   );
 }

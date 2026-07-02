@@ -3,21 +3,20 @@
 @tailwind utilities;
 
 /*
-  "Agent's ledger" theme — warm paper, ink, estate green.
-  Utility class names from the previous theme (.glass, .btn-primary,
-  .text-gradient-accent, …) are kept so all pages restyle without edits,
-  but their visual meaning is now flat, print-like, gradient-free.
+  Clean product theme — white, zinc neutrals, one blue accent.
+  Utility class names from earlier iterations (.glass, .btn-primary,
+  .text-gradient-accent, …) are kept so all pages restyle without edits.
+  Flat surfaces, 1px borders, no gradients, no glassmorphism.
 */
 
 :root {
-  --bg: #f6f2ea;
-  --surface: #fdfbf6;
-  --surface-2: #efe9dd;
-  --text: #201b12;
-  --text-dim: #5c5343;
-  --accent: #1f5738;
-  --accent-2: #c05b2e;
-  --line: #e0d7c6;
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f4f4f5;
+  --text: #09090b;
+  --text-dim: #52525b;
+  --accent: #2563eb;
+  --line: #e4e4e7;
 }
 
 html {
@@ -33,42 +32,31 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
-/* Faint paper grain — texture instead of gradient atmosphere. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.50 0 0 0 0 0.42 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 ::selection {
-  background: rgba(31, 87, 56, 0.18);
-  color: #201b12;
+  background: rgba(37, 99, 235, 0.15);
+  color: #09090b;
 }
 
-/* Former glassmorphism — now solid paper cards with a hairline. */
+/* Former glassmorphism — now solid white with a hairline border. */
 .glass {
-  background: var(--surface);
+  background: #ffffff;
   border: 1px solid var(--line);
 }
 
 .glass-strong {
-  background: rgba(246, 242, 234, 0.94);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--line);
 }
 
 @supports (backdrop-filter: blur(4px)) {
   .glass-strong {
-    background: rgba(246, 242, 234, 0.86);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
-/* Former gradient text — now plain ink / estate green. */
+/* Former gradient text — now plain ink / accent. */
 .text-gradient {
   color: var(--text);
 }
@@ -78,83 +66,87 @@ body::before {
 }
 
 .font-display {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 560;
-  letter-spacing: -0.015em;
-  font-variation-settings: "opsz" 60, "SOFT" 30, "WONK" 0;
+  font-family: var(--font-sans), -apple-system, "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
-/* Mono ledger label: timestamps, eyebrows, section numbers. */
+/* Small technical label: timestamps, eyebrows, section numbers. */
 .eyebrow {
   font-family: var(--font-mono), Menlo, monospace;
   font-size: 0.6875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--accent);
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
 }
 
 .btn-primary {
-  background: var(--text);
-  color: var(--bg);
-  font-weight: 600;
-  border: 1px solid var(--text);
+  background: #09090b;
+  color: #ffffff;
+  font-weight: 500;
+  border: 1px solid #09090b;
   transition: background 150ms ease-out, border-color 150ms ease-out;
 }
 
 .btn-primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: #27272a;
+  border-color: #27272a;
 }
 
 .btn-primary:active {
-  background: #163f29;
-  border-color: #163f29;
+  background: #3f3f46;
+  border-color: #3f3f46;
 }
 
 .btn-ghost {
   border: 1px solid var(--line);
   color: var(--text);
-  background: var(--surface);
+  background: #ffffff;
   transition: border-color 150ms ease-out, background 150ms ease-out;
 }
 
 .btn-ghost:hover {
-  border-color: var(--text-dim);
-  background: #ffffff;
+  border-color: #d4d4d8;
+  background: var(--surface);
 }
 
 .input-dark {
-  background: var(--surface);
+  background: #ffffff;
   border: 1px solid var(--line);
   color: var(--text);
-  transition: border-color 150ms ease-out, background 150ms ease-out;
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
 }
 
 .input-dark::placeholder {
-  color: var(--text-dim);
-  opacity: 0.7;
+  color: #a1a1aa;
 }
 
 .input-dark:focus {
   outline: none;
   border-color: var(--accent);
-  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .section {
-  padding-block: clamp(72px, 10vw, 140px);
+  padding-block: clamp(64px, 9vw, 128px);
 }
 
 .container-lumi {
-  max-width: 1200px;
+  max-width: 1152px;
   margin-inline: auto;
   padding-inline: 24px;
 }
 
-/* Ruled hairline, like a page in a day-planner. */
+/* Hairline divider. */
 .rule {
   border-top: 1px solid var(--line);
+}
+
+/* Subtle dot grid for hero / section backgrounds. */
+.dot-grid {
+  background-image: radial-gradient(circle, #e4e4e7 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 @media (prefers-reduced-motion: reduce) {

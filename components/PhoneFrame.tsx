@@ -24,7 +24,7 @@ export function PhoneFrame({ src, alt, className = "", children }: Props) {
         className="absolute -inset-10 rounded-[60px] blur-3xl opacity-70"
         style={{
           background:
-            "radial-gradient(closest-side, rgba(32,27,18,0.10), transparent 70%)",
+            "radial-gradient(closest-side, rgba(9,9,11,0.10), transparent 70%)",
         }}
         aria-hidden
       />
@@ -34,7 +34,7 @@ export function PhoneFrame({ src, alt, className = "", children }: Props) {
         className="relative rounded-[44px] p-[3px] shadow-glow"
         style={{
           background:
-            "linear-gradient(160deg, #ffffff 0%, #EFE9DD 40%, #cbd5e1 100%)",
+            "linear-gradient(160deg, #ffffff 0%, #F4F4F5 40%, #cbd5e1 100%)",
         }}
       >
         <div
@@ -43,7 +43,7 @@ export function PhoneFrame({ src, alt, className = "", children }: Props) {
         >
           {/* notch */}
           <div className="relative h-7 flex items-center justify-center z-20">
-            <div className="absolute top-2 w-24 h-5 bg-[#201B12] rounded-full" />
+            <div className="absolute top-2 w-24 h-5 bg-[#09090B] rounded-full" />
           </div>
 
           {/* screen content */}

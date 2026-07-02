@@ -13,16 +13,16 @@ type Params = {
 };
 
 const BRAND = {
-  bg: "#F6F2EA",
-  surface: "#FDFBF6",
-  surface2: "#EFE9DD",
-  text: "#201B12",
-  textDim: "#5C5343",
-  textMute: "#958976",
-  border: "#E0D7C6",
-  indigo: "#1F5738",
-  violet: "#1F5738",
-  pink: "#C05B2E",
+  bg: "#FAFAFA",
+  surface: "#FFFFFF",
+  surface2: "#F4F4F5",
+  text: "#09090B",
+  textDim: "#52525B",
+  textMute: "#A1A1AA",
+  border: "#E4E4E7",
+  indigo: "#2563EB",
+  violet: "#2563EB",
+  pink: "#D97706",
 };
 
 function escapeHtml(s: string): string {

@@ -54,7 +54,7 @@ export default function PricingPage() {
             className="rounded-card p-10 border border-border shadow-soft"
             style={{
               background:
-                "linear-gradient(135deg, rgba(31,87,56,0.06) 0%, rgba(31,87,56,0.05) 50%, rgba(192,91,46,0.04) 100%)",
+                "linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(37,99,235,0.05) 50%, rgba(217,119,6,0.04) 100%)",
             }}
           >
             <p className="text-xs uppercase tracking-widest text-accent font-semibold">
@@ -77,7 +77,7 @@ export default function PricingPage() {
                     className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0"
                     style={{
                       background:
-                        "#1F5738",
+                        "#2563EB",
                     }}
                   >
                     <Check size={12} className="text-white" strokeWidth={3} />

@@ -65,7 +65,7 @@ export function WaitlistHow() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-card border border-border bg-bg p-6">
+            <div className="mt-8 rounded-card border border-border bg-white p-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-mute mb-4">
                 What beta members get
               </p>

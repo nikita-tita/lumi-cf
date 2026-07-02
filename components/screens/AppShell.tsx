@@ -33,7 +33,7 @@ export function AppShell({ active, children, title, headerAction }: Props) {
       style={{ background: "#FFFFFF" }}
     >
       {/* status bar */}
-      <div className="flex items-center justify-between px-6 pt-1 pb-1.5 text-[11px] font-semibold text-[#201B12]/80 tracking-tight">
+      <div className="flex items-center justify-between px-6 pt-1 pb-1.5 text-[11px] font-semibold text-[#09090B]/80 tracking-tight">
         <span>9:41</span>
         <div className="flex items-center gap-1">
           <SignalDots />
@@ -45,7 +45,7 @@ export function AppShell({ active, children, title, headerAction }: Props) {
       {/* header */}
       {(title || headerAction) && (
         <div className="flex items-end justify-between px-5 pt-2 pb-1">
-          <h1 className="text-[22px] font-bold tracking-tight text-[#201B12] leading-none">
+          <h1 className="text-[22px] font-bold tracking-tight text-[#09090B] leading-none">
             {title}
           </h1>
           <div>{headerAction}</div>
@@ -58,10 +58,10 @@ export function AppShell({ active, children, title, headerAction }: Props) {
       {/* floating tab bar (pill) */}
       <div className="shrink-0 px-3 pt-2 pb-2">
         <div
-          className="rounded-[24px] border border-[#201B12]/5 bg-white/90 backdrop-blur-xl px-1.5 py-1 flex items-center justify-around"
+          className="rounded-[24px] border border-[#09090B]/5 bg-white/90 backdrop-blur-xl px-1.5 py-1 flex items-center justify-around"
           style={{
             boxShadow:
-              "0 14px 30px -12px rgba(32,27,18,0.2), 0 1px 0 rgba(255,255,255,0.8) inset",
+              "0 14px 30px -12px rgba(9,9,11,0.2), 0 1px 0 rgba(255,255,255,0.8) inset",
           }}
         >
           <TabItem
@@ -90,7 +90,7 @@ export function AppShell({ active, children, title, headerAction }: Props) {
 
       {/* home indicator */}
       <div className="shrink-0 flex justify-center pb-1">
-        <div className="w-[120px] h-[4px] rounded-full bg-[#201B12]/25" />
+        <div className="w-[120px] h-[4px] rounded-full bg-[#09090B]/25" />
       </div>
     </div>
   );
@@ -107,10 +107,10 @@ function TabItem({
 }) {
   return (
     <div className="flex flex-col items-center gap-0 px-1 pt-1 pb-0.5 w-[46px]">
-      <div className={active ? "text-accent" : "text-[#958976]"}>{icon}</div>
+      <div className={active ? "text-accent" : "text-[#A1A1AA]"}>{icon}</div>
       <span
         className={`mt-0.5 text-[8.5px] font-medium ${
-          active ? "text-accent" : "text-[#958976]"
+          active ? "text-accent" : "text-[#A1A1AA]"
         }`}
       >
         {label}
@@ -119,7 +119,7 @@ function TabItem({
         className="mt-0.5 h-[2px] w-[14px] rounded-full"
         style={{
           background: active
-            ? "#1F5738"
+            ? "#2563EB"
             : "transparent",
         }}
       />
@@ -134,15 +134,15 @@ function ChatTab({ active }: { active: boolean }) {
         className="w-[36px] h-[36px] rounded-full flex items-center justify-center"
         style={{
           background:
-            "linear-gradient(135deg, #1F5738 0%, #1F5738 55%, #C05B2E 100%)",
-          boxShadow: "0 10px 20px -6px rgba(31,87,56,0.55)",
+            "linear-gradient(135deg, #2563EB 0%, #2563EB 55%, #D97706 100%)",
+          boxShadow: "0 10px 20px -6px rgba(37,99,235,0.55)",
         }}
       >
         <Sparkles size={17} className="text-white" strokeWidth={2.4} />
       </div>
       <span
         className={`mt-0.5 text-[8.5px] font-semibold ${
-          active ? "text-[#201B12]" : "text-[#5C5343]"
+          active ? "text-[#09090B]" : "text-[#52525B]"
         }`}
       >
         Lumi
@@ -155,10 +155,10 @@ function ChatTab({ active }: { active: boolean }) {
 function SignalDots() {
   return (
     <div className="flex items-end gap-0.5">
-      <span className="w-0.5 h-1.5 bg-[#201B12]/80 rounded-sm" />
-      <span className="w-0.5 h-2 bg-[#201B12]/80 rounded-sm" />
-      <span className="w-0.5 h-2.5 bg-[#201B12]/80 rounded-sm" />
-      <span className="w-0.5 h-3 bg-[#201B12]/80 rounded-sm" />
+      <span className="w-0.5 h-1.5 bg-[#09090B]/80 rounded-sm" />
+      <span className="w-0.5 h-2 bg-[#09090B]/80 rounded-sm" />
+      <span className="w-0.5 h-2.5 bg-[#09090B]/80 rounded-sm" />
+      <span className="w-0.5 h-3 bg-[#09090B]/80 rounded-sm" />
     </div>
   );
 }
@@ -168,7 +168,7 @@ function WifiIcon() {
     <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
       <path
         d="M6 7.5L6.707 8.207C6.317 8.598 5.683 8.598 5.293 8.207L6 7.5zM1 3.5l.758.65C3.106 2.63 4.466 2 6 2c1.534 0 2.894.63 4.242 2.15L11 3.5C9.421 1.683 7.711 1 6 1s-3.421.683-5 2.5zM3 5.5l.79.614C4.528 5.176 5.207 4.75 6 4.75s1.472.426 2.21 1.364L9 5.5c-.933-1.186-1.862-1.75-3-1.75S3.933 4.314 3 5.5z"
-        fill="#201B12"
+        fill="#09090B"
         fillOpacity="0.8"
       />
     </svg>
@@ -178,10 +178,10 @@ function WifiIcon() {
 function BatteryIcon() {
   return (
     <div className="relative flex items-center">
-      <div className="w-5 h-2.5 rounded-[3px] border border-[#201B12]/80 flex items-center p-[1px]">
-        <div className="h-full w-3/4 bg-[#201B12]/80 rounded-sm" />
+      <div className="w-5 h-2.5 rounded-[3px] border border-[#09090B]/80 flex items-center p-[1px]">
+        <div className="h-full w-3/4 bg-[#09090B]/80 rounded-sm" />
       </div>
-      <div className="w-0.5 h-1 bg-[#201B12]/50 rounded-r-sm ml-[1px]" />
+      <div className="w-0.5 h-1 bg-[#09090B]/50 rounded-r-sm ml-[1px]" />
     </div>
   );
 }

@@ -236,14 +236,14 @@ export function WaitlistForm({
 
       <p
         className={`text-xs mt-3 ${
-          variant === "final" ? "text-[#F6F2EA]/60" : "text-text-mute"
+          variant === "final" ? "text-[#FAFAFA]/60" : "text-text-mute"
         }`}
       >
         No spam. We&apos;ll email you twice: once when beta opens, once when we launch.
       </p>
 
       {state.kind === "error" && (
-        <p className="text-xs text-[#C05B2E] mt-2" role="alert">
+        <p className="text-xs text-[#D97706] mt-2" role="alert">
           {state.message}
         </p>
       )}

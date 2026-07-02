@@ -49,7 +49,7 @@ export function Footer() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-sm text-text-dim hover:text-accent transition-colors"
+                      className="text-sm text-text-dim hover:text-text transition-colors"
                     >
                       {l.label}
                     </Link>
@@ -63,7 +63,7 @@ export function Footer() {
           <p className="text-xs text-text-mute">
             &copy; 2026 Lumi service app &mdash; operated by Nikita Titov, private individual.
           </p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-text-mute">
+          <p className="text-xs text-text-mute">
             Private beta &mdash; invites go out in waves
           </p>
         </div>

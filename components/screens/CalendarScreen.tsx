@@ -65,7 +65,7 @@ const TONE: Record<
   { bg: string; accent: string; text: string }
 > = {
   showing: {
-    bg: "bg-[#EDF3EC]",
+    bg: "bg-[#EFF6FF]",
     accent: "bg-accent",
     text: "text-accent-2",
   },
@@ -75,9 +75,9 @@ const TONE: Record<
     text: "text-[#7E22CE]",
   },
   neutral: {
-    bg: "bg-[#EFE9DD]",
+    bg: "bg-[#F4F4F5]",
     accent: "bg-[#64748B]",
-    text: "text-[#5C5343]",
+    text: "text-[#52525B]",
   },
   call: {
     bg: "bg-[#ECFDF5]",
@@ -86,7 +86,7 @@ const TONE: Record<
   },
   contract: {
     bg: "bg-[#FDF4FF]",
-    accent: "bg-[#C05B2E]",
+    accent: "bg-[#D97706]",
     text: "text-[#BE185D]",
   },
 };
@@ -98,10 +98,10 @@ export function CalendarScreen() {
     <AppShell active="calendar">
       <div className="px-5 pt-2 pb-2 flex items-center justify-between">
         <div>
-          <p className="text-[11px] uppercase tracking-wider text-[#958976] font-semibold">
+          <p className="text-[11px] uppercase tracking-wider text-[#A1A1AA] font-semibold">
             April
           </p>
-          <h1 className="mt-0.5 text-[22px] font-bold tracking-tight text-[#201B12] leading-none">
+          <h1 className="mt-0.5 text-[22px] font-bold tracking-tight text-[#09090B] leading-none">
             Wed 22
           </h1>
         </div>
@@ -125,13 +125,13 @@ export function CalendarScreen() {
               <div
                 key={`${d}-${i}`}
                 className={`flex flex-col items-center rounded-xl py-1.5 ${
-                  active ? "text-white" : "text-[#958976]"
+                  active ? "text-white" : "text-[#A1A1AA]"
                 }`}
                 style={
                   active
                     ? {
                         background:
-                          "#1F5738",
+                          "#2563EB",
                       }
                     : undefined
                 }
@@ -139,7 +139,7 @@ export function CalendarScreen() {
                 <span className="text-[9px] font-semibold uppercase">{d}</span>
                 <span
                   className={`text-[13px] font-bold ${
-                    active ? "text-white" : "text-[#201B12]"
+                    active ? "text-white" : "text-[#09090B]"
                   }`}
                 >
                   {date}
@@ -158,7 +158,7 @@ export function CalendarScreen() {
             {HOURS.map((h) => (
               <div
                 key={h}
-                className="text-[9px] font-semibold text-[#958976] tabular-nums"
+                className="text-[9px] font-semibold text-[#A1A1AA] tabular-nums"
                 style={{ height: SLOT_H * 2, paddingTop: 0 }}
               >
                 {h}:00
@@ -227,11 +227,11 @@ function EventBlock({ event, index }: { event: Event; index: number }) {
                 <Repeat size={9} className={tone.text} strokeWidth={2.4} />
               )}
             </div>
-            <h3 className="text-[11.5px] font-semibold text-[#201B12] leading-tight truncate">
+            <h3 className="text-[11.5px] font-semibold text-[#09090B] leading-tight truncate">
               {event.title}
             </h3>
             {event.place && (
-              <p className="text-[9.5px] text-[#5C5343] truncate">
+              <p className="text-[9.5px] text-[#52525B] truncate">
                 {event.place}
               </p>
             )}
@@ -248,9 +248,9 @@ function GovernorCard({ event }: { event: Event }) {
     <motion.div
       animate={{
         boxShadow: [
-          "0 0 0 0 rgba(31,87,56,0.45)",
-          "0 0 0 6px rgba(31,87,56,0)",
-          "0 0 0 0 rgba(31,87,56,0)",
+          "0 0 0 0 rgba(37,99,235,0.45)",
+          "0 0 0 6px rgba(37,99,235,0)",
+          "0 0 0 0 rgba(37,99,235,0)",
         ],
       }}
       transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
@@ -264,11 +264,11 @@ function GovernorCard({ event }: { event: Event }) {
             {event.start} · suggested
           </p>
         </div>
-        <h3 className="text-[11.5px] font-semibold text-[#201B12] leading-tight truncate">
+        <h3 className="text-[11.5px] font-semibold text-[#09090B] leading-tight truncate">
           {event.title}
         </h3>
         {event.place && (
-          <p className="text-[9.5px] text-[#5C5343] truncate">{event.place}</p>
+          <p className="text-[9.5px] text-[#52525B] truncate">{event.place}</p>
         )}
       </div>
     </motion.div>
@@ -279,7 +279,7 @@ function RoundBtn({ children }: { children: React.ReactNode }) {
   return (
     <button
       type="button"
-      className="w-7 h-7 rounded-full bg-[#EFE9DD] text-[#5C5343] flex items-center justify-center"
+      className="w-7 h-7 rounded-full bg-[#F4F4F5] text-[#52525B] flex items-center justify-center"
     >
       {children}
     </button>

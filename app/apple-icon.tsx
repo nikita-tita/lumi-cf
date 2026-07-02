@@ -14,7 +14,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#1F5738",
+          background: "#09090B",
         }}
       >
         <svg
@@ -23,9 +23,11 @@ export default function AppleIcon() {
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Sunrise over a sill — light on the working day. */}
-          <path d="M118 330a138 138 0 0 1 276 0Z" fill="#F6F2EA" />
-          <rect x="118" y="368" width="276" height="30" rx="15" fill="#F6F2EA" />
+          {/* Four-point spark — Lumi, light on the working day. */}
+          <path
+            d="M256 96 L296 216 L416 256 L296 296 L256 416 L216 296 L96 256 L216 216 Z"
+            fill="#FFFFFF"
+          />
         </svg>
       </div>
     ),
