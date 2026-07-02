@@ -35,40 +35,38 @@ const rows: { label: string; values: Cell[] }[] = [
   },
   {
     label: "Price",
-    values: ["Free · optional donation", "$69/mo", "$499/mo", "Free", "Free"],
+    values: ["€9/mo · 7-day trial", "$69/mo", "$499/mo", "Free", "Free"],
   },
 ];
 
 function Cell({ v }: { v: Cell }) {
   if (v === "yes")
     return (
-      <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-accent/15">
+      <div className="inline-flex items-center justify-center w-6 h-6 rounded-btn bg-accent-soft">
         <Check size={14} className="text-accent" />
       </div>
     );
   if (v === "no")
     return (
-      <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-black/5">
+      <div className="inline-flex items-center justify-center w-6 h-6 rounded-btn bg-surface-2">
         <X size={14} className="text-text-mute" />
       </div>
     );
   if (v === "partial")
     return (
-      <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-black/5">
+      <div className="inline-flex items-center justify-center w-6 h-6 rounded-btn bg-surface-2">
         <Minus size={14} className="text-text-dim" />
       </div>
     );
-  return <span className="text-xs text-text-dim">{v}</span>;
+  return <span className="font-mono text-[11px] text-text-dim">{v}</span>;
 }
 
 export function Comparison() {
   return (
-    <section className="section">
+    <section className="section bg-surface border-y border-border">
       <div className="container-lumi">
         <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">
-            Why not the existing tools
-          </p>
+          <p className="eyebrow mb-4">Why not the existing tools</p>
           <h2 className="font-display text-4xl md:text-5xl tracking-tight text-text">
             Your CRM is a tab. Your calendar is another tab. Lumi is one app.
           </h2>
@@ -78,18 +76,18 @@ export function Comparison() {
           </p>
         </div>
 
-        <div className="mt-14 bg-surface rounded-card border border-border shadow-soft overflow-x-auto">
-          <table className="w-full min-w-[680px]">
+        <div className="mt-14 overflow-x-auto">
+          <table className="w-full min-w-[720px] border-collapse">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left text-xs uppercase tracking-wider text-text-mute font-medium px-6 py-5">
-                  Feature
+              <tr className="border-b-2 border-text">
+                <th className="text-left py-4 pr-4 font-mono text-[11px] uppercase tracking-[0.14em] text-text-mute font-medium">
+                  Capability
                 </th>
                 {columns.map((c, i) => (
                   <th
                     key={c}
-                    className={`text-center text-xs uppercase tracking-wider font-medium px-4 py-5 ${
-                      i === 0 ? "text-accent" : "text-text-mute"
+                    className={`py-4 px-3 text-center font-display text-base ${
+                      i === 0 ? "text-accent" : "text-text-dim"
                     }`}
                   >
                     {c}
@@ -98,18 +96,13 @@ export function Comparison() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((r, ri) => (
-                <tr
-                  key={r.label}
-                  className={ri < rows.length - 1 ? "border-b border-border" : ""}
-                >
-                  <td className="text-sm text-text px-6 py-5">{r.label}</td>
-                  {r.values.map((v, ci) => (
+              {rows.map((r) => (
+                <tr key={r.label} className="border-b border-border">
+                  <td className="py-4 pr-4 text-sm text-text">{r.label}</td>
+                  {r.values.map((v, i) => (
                     <td
-                      key={ci}
-                      className={`text-center px-4 py-5 ${
-                        ci === 0 ? "bg-accent/[0.06]" : ""
-                      }`}
+                      key={i}
+                      className={`py-4 px-3 text-center ${i === 0 ? "bg-accent-soft" : ""}`}
                     >
                       <Cell v={v} />
                     </td>

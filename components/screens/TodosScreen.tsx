@@ -44,7 +44,7 @@ const TODOS: Todo[] = [
 const PRIORITY_COLOR: Record<Priority, string> = {
   high: "bg-[#EF4444]",
   med: "bg-accent",
-  low: "bg-[#94A3B8]",
+  low: "bg-[#958976]",
 };
 
 export function TodosScreen() {
@@ -55,9 +55,9 @@ export function TodosScreen() {
       headerAction={
         <button
           type="button"
-          className="w-8 h-8 rounded-full text-white flex items-center justify-center shadow-[0_6px_16px_-6px_rgba(99,102,241,0.55)]"
+          className="w-8 h-8 rounded-full text-white flex items-center justify-center shadow-[0_6px_16px_-6px_rgba(31,87,56,0.55)]"
           style={{
-            background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
+            background: "#1F5738",
           }}
         >
           <Plus size={16} strokeWidth={2.4} />
@@ -90,7 +90,7 @@ function Pill({
     <div className="flex flex-col items-center gap-1">
       <span
         className={`text-[10.5px] font-semibold ${
-          active ? "text-[#0F172A]" : "text-[#94A3B8]"
+          active ? "text-[#201B12]" : "text-[#958976]"
         }`}
       >
         {children}
@@ -99,7 +99,7 @@ function Pill({
         className="h-[2px] w-[18px] rounded-full"
         style={{
           background: active
-            ? "linear-gradient(90deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%)"
+            ? "#1F5738"
             : "transparent",
         }}
       />
@@ -124,14 +124,14 @@ function TodoRow({ todo, index }: { todo: Todo; index: number }) {
             className={`w-1.5 h-1.5 rounded-full ${PRIORITY_COLOR[todo.priority]}`}
           />
           <h3
-            className={`text-[12.5px] font-semibold text-[#0F172A] leading-tight truncate ${
+            className={`text-[12.5px] font-semibold text-[#201B12] leading-tight truncate ${
               todo.done ? "line-through" : ""
             }`}
           >
             {todo.title}
           </h3>
         </div>
-        <p className="mt-1 text-[10.5px] text-[#94A3B8]">{todo.meta}</p>
+        <p className="mt-1 text-[10.5px] text-[#958976]">{todo.meta}</p>
         {todo.source && (
           <p className="mt-0.5 text-[9.5px] text-accent-2 font-medium">
             {todo.source}
@@ -148,7 +148,7 @@ function Checkbox({ done }: { done?: boolean }) {
       <div
         className="shrink-0 mt-0.5 w-5 h-5 rounded-md flex items-center justify-center"
         style={{
-          background: "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
+          background: "#1F5738",
         }}
       >
         <Check size={12} className="text-white" strokeWidth={3} />

@@ -71,7 +71,7 @@ const TYPE_META: Record<
   },
   focus: {
     Icon: Target,
-    tint: "bg-[#EEF2FF]",
+    tint: "bg-[#EDF3EC]",
     border: "border-l-accent",
     badge: "text-accent-2",
   },
@@ -94,13 +94,13 @@ export function FeedScreen() {
     <AppShell active="chat">
       <div className="h-full overflow-hidden">
         <div className="px-5 pt-3 pb-2">
-          <p className="text-[11px] uppercase tracking-wider text-[#94A3B8] font-semibold">
+          <p className="text-[11px] uppercase tracking-wider text-[#958976] font-semibold">
             Wednesday · Apr 22
           </p>
-          <h2 className="mt-1 text-[22px] font-bold tracking-tight text-[#0F172A] leading-[1.1]">
+          <h2 className="mt-1 text-[22px] font-bold tracking-tight text-[#201B12] leading-[1.1]">
             Good morning, Niki.
           </h2>
-          <p className="mt-1 text-[12px] text-[#475569]">
+          <p className="mt-1 text-[12px] text-[#5C5343]">
             2 showings · 3 leads need a nudge
           </p>
         </div>
@@ -120,10 +120,10 @@ export function FeedScreen() {
         className="absolute right-4 bottom-3 z-10"
       >
         <div
-          className="w-12 h-12 rounded-full shadow-[0_10px_24px_-8px_rgba(99,102,241,0.6)] flex items-center justify-center"
+          className="w-12 h-12 rounded-full shadow-[0_10px_24px_-8px_rgba(31,87,56,0.6)] flex items-center justify-center"
           style={{
             background:
-              "linear-gradient(140deg, #818CF8 0%, #6366F1 50%, #8B5CF6 100%)",
+              "linear-gradient(140deg, #818CF8 0%, #1F5738 50%, #1F5738 100%)",
           }}
         >
           <Mic size={20} className="text-white" strokeWidth={2.4} />
@@ -142,7 +142,7 @@ function SmartCard({ card, index }: { card: Card; index: number }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.12 + index * 0.08, duration: 0.4, ease: "easeOut" }}
-      className={`relative rounded-2xl bg-white border border-[#E2E8F0] border-l-[3px] ${meta.border} p-3 shadow-[0_4px_16px_-8px_rgba(15,23,42,0.08)]`}
+      className={`relative rounded-2xl bg-white border border-[#E2E8F0] border-l-[3px] ${meta.border} p-3 shadow-[0_4px_16px_-8px_rgba(32,27,18,0.08)]`}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-start gap-2 min-w-0">
@@ -157,14 +157,14 @@ function SmartCard({ card, index }: { card: Card; index: number }) {
             >
               {card.kicker}
             </p>
-            <h3 className="mt-0.5 text-[12.5px] font-semibold text-[#0F172A] leading-tight">
+            <h3 className="mt-0.5 text-[12.5px] font-semibold text-[#201B12] leading-tight">
               {card.title}
             </h3>
           </div>
         </div>
         <ConfidenceBadge value={card.confidence} />
       </div>
-      <p className="mt-2 text-[11px] text-[#475569] leading-snug">{card.desc}</p>
+      <p className="mt-2 text-[11px] text-[#5C5343] leading-snug">{card.desc}</p>
       {(card.primary || card.secondary) && (
         <div className="mt-2.5 flex gap-1.5">
           {card.primary && (
@@ -182,7 +182,7 @@ function SmartCard({ card, index }: { card: Card; index: number }) {
 
 function ConfidenceBadge({ value }: { value: number }) {
   return (
-    <span className="shrink-0 text-[9px] font-semibold text-[#475569] tabular-nums bg-[#F1F5F9] rounded-full px-1.5 py-0.5">
+    <span className="shrink-0 text-[9px] font-semibold text-[#5C5343] tabular-nums bg-[#EFE9DD] rounded-full px-1.5 py-0.5">
       {value}%
     </span>
   );
@@ -195,7 +195,7 @@ function PrimaryBtn({ children }: { children: ReactNode }) {
       className="flex items-center gap-1 text-[11px] font-semibold text-white rounded-lg px-2.5 py-1.5"
       style={{
         background:
-          "linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #A855F7 100%)",
+          "linear-gradient(135deg, #1F5738 0%, #1F5738 55%, #A855F7 100%)",
       }}
     >
       {children}
@@ -207,7 +207,7 @@ function SecondaryBtn({ children }: { children: ReactNode }) {
   return (
     <button
       type="button"
-      className="text-[11px] font-semibold text-[#475569] rounded-lg px-2.5 py-1.5 bg-[#F1F5F9]"
+      className="text-[11px] font-semibold text-[#5C5343] rounded-lg px-2.5 py-1.5 bg-[#EFE9DD]"
     >
       {children}
     </button>

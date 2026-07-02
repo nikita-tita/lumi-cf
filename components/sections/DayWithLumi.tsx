@@ -55,12 +55,10 @@ export function DayWithLumi() {
   });
 
   return (
-    <section className="section bg-gradient-to-b from-transparent via-surface-2/50 to-transparent">
+    <section className="section">
       <div className="container-lumi">
         <div className="max-w-2xl mb-20 lg:mb-28">
-          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">
-            A day with Lumi
-          </p>
+          <p className="eyebrow mb-4">A day with Lumi</p>
           <h2 className="font-display text-4xl md:text-5xl tracking-tight text-text">
             From the first showing to the last follow-up.
           </h2>
@@ -82,15 +80,15 @@ export function DayWithLumi() {
                 viewport={{ once: true, margin: "-40%" }}
                 transition={{ duration: 0.7 }}
               >
-                <div className="flex items-baseline gap-4 mb-3">
-                  <span className="font-display text-5xl md:text-6xl text-gradient-accent">
+                <div className="flex items-baseline gap-4 mb-3 border-b border-border pb-3">
+                  <span className="font-mono text-4xl md:text-5xl text-accent tracking-tight">
                     {s.time}
                   </span>
-                  <span className="text-xs uppercase tracking-widest text-text-mute">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-mute">
                     {s.tag}
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-text leading-tight mt-4">
+                <h3 className="font-display text-2xl md:text-3xl text-text leading-tight mt-4">
                   {s.title}
                 </h3>
                 <p className="mt-4 text-base md:text-lg text-text-dim leading-relaxed max-w-lg">

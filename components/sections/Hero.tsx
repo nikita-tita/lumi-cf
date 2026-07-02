@@ -9,29 +9,38 @@ import { ChatScreen } from "@/components/screens/ChatScreen";
 
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      {/* Planner columns — faint vertical rules behind the hero. */}
+      <div
+        className="absolute inset-0 -z-10 hidden lg:block"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(90deg, transparent, transparent calc(25% - 1px), #E0D7C6 calc(25% - 1px), #E0D7C6 25%)",
+          opacity: 0.35,
+        }}
+        aria-hidden
+      />
       <div className="container-lumi">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill glass text-xs text-text-dim mb-8"
+              transition={{ duration: 0.5 }}
+              className="eyebrow mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-soft" />
-              Built for real estate agents &middot; Private beta June 2026
-            </motion.div>
+              For real estate agents · Private beta
+            </motion.p>
 
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.05 }}
-              className="font-display text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.02] text-text"
+              className="font-display text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.04] text-text"
             >
               Just tell Lumi.
               <br />
-              <span className="text-gradient-accent">It handles the rest.</span>
+              <em className="text-accent not-italic md:italic">It handles the rest.</em>
             </motion.h1>
 
             <motion.p
@@ -62,9 +71,9 @@ export function Hero() {
             >
               <Link
                 href="/how-it-works"
-                className="inline-flex items-center gap-2 text-sm text-text-dim hover:text-text transition-colors"
+                className="inline-flex items-center gap-2 text-sm text-text-dim hover:text-accent transition-colors"
               >
-                <span className="w-9 h-9 rounded-full border border-border bg-white/60 flex items-center justify-center">
+                <span className="w-9 h-9 rounded-btn border border-border bg-surface flex items-center justify-center">
                   <Play size={12} className="text-text ml-0.5" />
                 </span>
                 Watch 60 seconds
@@ -77,16 +86,14 @@ export function Hero() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.2 }}
             className="relative"
           >
-            <div className="animate-float">
-              <PhoneFrame priority>
-                <ChatScreen />
-              </PhoneFrame>
-            </div>
+            <PhoneFrame priority>
+              <ChatScreen />
+            </PhoneFrame>
           </motion.div>
         </div>
       </div>

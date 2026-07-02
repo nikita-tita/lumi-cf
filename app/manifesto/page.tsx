@@ -49,7 +49,7 @@ export default function ManifestoPage() {
           <p className="font-display text-2xl md:text-3xl text-text leading-relaxed mt-12 text-gradient-accent">
             Lumi is the calendar a real estate agent would design for themselves.
           </p>
-          <p className="text-sm text-text-mute mt-16">&mdash; Nikita, Helsinki</p>
+          <p className="text-sm text-text-mute mt-16">&mdash; Nikita, founder of Lumi</p>
         </article>
       </section>
       <FinalCta />

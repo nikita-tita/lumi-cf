@@ -138,7 +138,7 @@ export default function SocialLinksPage() {
       <style>{`
         header, footer { display: none !important; }
         html, body { background: #08080C !important; }
-        ::selection { background: rgba(139,92,246,0.35); color: #fff; }
+        ::selection { background: rgba(31,87,56,0.35); color: #fff; }
       `}</style>
 
       <main className="w-full max-w-md text-white flex flex-col items-center">
@@ -147,7 +147,7 @@ export default function SocialLinksPage() {
           className="relative w-28 h-28 rounded-full overflow-hidden mb-6"
           style={{
             boxShadow:
-              "0 0 0 2px rgba(139,92,246,0.4), 0 20px 60px -15px rgba(139,92,246,0.5)",
+              "0 0 0 2px rgba(31,87,56,0.4), 0 20px 60px -15px rgba(31,87,56,0.5)",
           }}
         >
           <Image
@@ -197,8 +197,8 @@ export default function SocialLinksPage() {
                 link.accent
                   ? {
                       background:
-                        "linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%)",
-                      boxShadow: "0 12px 30px -10px rgba(139,92,246,0.55)",
+                        "#1F5738",
+                      boxShadow: "0 12px 30px -10px rgba(31,87,56,0.55)",
                     }
                   : undefined
               }

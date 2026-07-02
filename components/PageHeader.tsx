@@ -8,13 +8,9 @@ export function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <section className="pt-40 pb-16">
+    <section className="pt-36 pb-16">
       <div className="container-lumi max-w-3xl">
-        {eyebrow && (
-          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">
-            {eyebrow}
-          </p>
-        )}
+        {eyebrow && <p className="eyebrow mb-4">{eyebrow}</p>}
         <h1 className="font-display text-5xl md:text-6xl tracking-tight text-text leading-[1.05]">
           {title}
         </h1>

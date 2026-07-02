@@ -8,11 +8,11 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = {
   title: "Press",
   description:
-    "Lumi press kit: logo, screenshots, founder bio, and boilerplate. Helsinki, 2026.",
+    "Lumi press kit: logo, screenshots, founder bio, and boilerplate.",
   alternates: { canonical: "https://lumi.estate/press" },
 };
 
-const boilerplate = `Lumi is the AI calendar and CRM built for real estate agents. Capture showings by voice, keep your pipeline alive, never drop a follow-up. Built in Helsinki, Finland. Private beta opens June 2026.`;
+const boilerplate = `Lumi is the AI calendar and CRM built for real estate agents. Capture showings by voice, keep your pipeline alive, never drop a follow-up. Currently in private beta.`;
 
 export default function PressPage() {
   return (

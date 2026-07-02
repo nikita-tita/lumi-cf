@@ -10,38 +10,45 @@ export function Faq() {
   return (
     <section className="section">
       <div className="container-lumi max-w-3xl">
-        <div className="text-center">
-          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">
-            Questions
-          </p>
+        <div>
+          <p className="eyebrow mb-4">Questions</p>
           <h2 className="font-display text-4xl md:text-5xl tracking-tight text-text">
             Things worth knowing.
           </h2>
         </div>
 
-        <div className="mt-14 bg-surface rounded-card border border-border shadow-soft overflow-hidden divide-y divide-border">
+        <div className="mt-14 rule">
           {faqItems.map((item, i) => {
             const isOpen = open === i;
             return (
-              <div key={item.q}>
+              <div key={item.q} className="border-b border-border">
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-surface-2 transition-colors"
+                  className="w-full text-left py-5 flex items-baseline justify-between gap-6 group"
                 >
-                  <span className="text-base md:text-lg font-semibold text-text">
-                    {item.q}
+                  <span className="flex items-baseline gap-5">
+                    <span className="font-mono text-xs text-text-mute w-6 flex-shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      className={`text-base md:text-lg font-display transition-colors ${
+                        isOpen ? "text-accent" : "text-text group-hover:text-accent"
+                      }`}
+                    >
+                      {item.q}
+                    </span>
                   </span>
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-surface-2 flex items-center justify-center">
+                  <span className="flex-shrink-0 self-center">
                     {isOpen ? (
-                      <Minus size={14} className="text-accent" />
+                      <Minus size={16} className="text-accent" />
                     ) : (
-                      <Plus size={14} className="text-text-dim" />
+                      <Plus size={16} className="text-text-mute" />
                     )}
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-6 text-sm md:text-base text-text-dim leading-relaxed">
+                  <div className="pb-6 pl-11 text-sm md:text-base text-text-dim leading-relaxed max-w-2xl">
                     {item.a}
                   </div>
                 )}

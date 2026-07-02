@@ -15,18 +15,17 @@ export default async function JoinOpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background:
-            "radial-gradient(120% 80% at 100% 0%, rgba(99,102,241,0.6), transparent 60%), radial-gradient(120% 80% at 0% 100%, rgba(236,72,153,0.5), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
-          color: "#fff",
+          background: "#1F5738",
+          color: "#F6F2EA",
         }}
       >
         <div
           style={{
             fontSize: 24,
-            letterSpacing: 4,
-            color: "#f472b6",
+            letterSpacing: 5,
+            color: "rgba(246,242,234,0.65)",
             textTransform: "uppercase",
-            marginBottom: 24,
+            marginBottom: 28,
             fontFamily: "monospace",
           }}
         >
@@ -35,43 +34,34 @@ export default async function JoinOpengraphImage() {
         <div
           style={{
             fontSize: 96,
-            fontWeight: 700,
+            fontWeight: 600,
             lineHeight: 1.0,
             letterSpacing: "-0.03em",
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <div>Free for the</div>
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            first thousand.
-          </div>
+          <div>Get your</div>
+          <div>day back.</div>
         </div>
         <div
           style={{
             fontSize: 32,
-            color: "rgba(255,255,255,0.7)",
+            color: "rgba(246,242,234,0.75)",
             marginTop: 40,
             maxWidth: 900,
             lineHeight: 1.4,
           }}
         >
-          Private beta opens Q2 2026 · Helsinki · EU · LatAm · MENA
+          Invites in waves · Beta is free · Two emails, total
         </div>
         <div
           style={{
             position: "absolute",
-            bottom: 60,
+            bottom: 52,
             right: 80,
             fontSize: 22,
-            color: "rgba(255,255,255,0.5)",
+            color: "rgba(246,242,234,0.55)",
             fontFamily: "monospace",
           }}
         >
