@@ -9,6 +9,7 @@ type Stage = "active" | "warm" | "cold";
 type Client = {
   name: string;
   initials: string;
+  avatar: string;
   budget: string;
   lastContact: string;
   nextAction: string;
@@ -20,6 +21,7 @@ const CLIENTS: Client[] = [
   {
     name: "Clara Ruiz",
     initials: "CR",
+    avatar: "/avatars/clara.jpg",
     budget: "€1.8M · 3BR",
     lastContact: "Today",
     nextAction: "Passeig de Gràcia showing · 11:30",
@@ -28,6 +30,7 @@ const CLIENTS: Client[] = [
   {
     name: "Andreas Moreno",
     initials: "AM",
+    avatar: "/avatars/andreas.jpg",
     budget: "€2.4M · 4BR",
     lastContact: "Yesterday",
     nextAction: "Send comps by 18:00",
@@ -36,6 +39,7 @@ const CLIENTS: Client[] = [
   {
     name: "Dimitri Schneider",
     initials: "DS",
+    avatar: "/avatars/dimitri.jpg",
     budget: "€900K · 2BR",
     lastContact: "3 days ago",
     nextAction: "Contract review today",
@@ -45,6 +49,7 @@ const CLIENTS: Client[] = [
   {
     name: "Sarah Mitchell",
     initials: "SM",
+    avatar: "/avatars/sarah.jpg",
     budget: "€1.2M · 3BR",
     lastContact: "9 days ago",
     nextAction: "Draft re-engagement",
@@ -147,18 +152,24 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
       transition={{ delay: 0.12 + index * 0.07, duration: 0.4 }}
       className="bg-white rounded-2xl border border-[#E2E8F0] px-3 py-2.5 flex items-start gap-2.5"
     >
-      <div
-        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-white text-[12px] font-bold"
-        style={{
-          background:
-            client.stage === "active"
-              ? "linear-gradient(140deg, #34D399 0%, #10B981 100%)"
-              : client.stage === "warm"
-                ? "linear-gradient(140deg, #818CF8 0%, #2563EB 100%)"
-                : "linear-gradient(140deg, #F87171 0%, #EF4444 100%)",
-        }}
-      >
-        {client.initials}
+      <div className="relative shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={client.avatar}
+          alt={client.name}
+          className="w-9 h-9 rounded-full object-cover"
+        />
+        <span
+          className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white"
+          style={{
+            background:
+              client.stage === "active"
+                ? "#10B981"
+                : client.stage === "warm"
+                  ? "#2563EB"
+                  : "#EF4444",
+          }}
+        />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">

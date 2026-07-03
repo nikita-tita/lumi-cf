@@ -8,7 +8,6 @@ import {
   X,
   CalendarClock,
   MapPin,
-  User,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { AppShell } from "./AppShell";
@@ -83,8 +82,13 @@ export function ChatScreen() {
 
 function ScopeChip() {
   return (
-    <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EFF6FF] border border-[#2563EB]/20 px-2 py-0.5">
-      <User size={10} className="text-accent" strokeWidth={2.4} />
+    <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EFF6FF] border border-[#2563EB]/20 pl-0.5 pr-2 py-0.5">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/avatars/clara.jpg"
+        alt="Clara Ruiz"
+        className="w-4 h-4 rounded-full object-cover"
+      />
       <span className="text-[9.5px] font-semibold text-accent tracking-tight">
         Clara Ruiz
       </span>
