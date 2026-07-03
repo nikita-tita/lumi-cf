@@ -215,7 +215,7 @@ export default function PromptAfterPage() {
             <span aria-hidden>·</span>
             <span>Updated July 2026</span>
             <span aria-hidden>·</span>
-            <span>Pack 19 of 30 · @lumi.estate</span>
+            <span>Pack 19 of 33 · @lumi.estate</span>
           </div>
         </div>
 

@@ -11,6 +11,41 @@ interface Env {
   SUPABASE_SERVICE_ROLE_KEY: string;
   RESEND_API_KEY?: string;
   TURNSTILE_SECRET_KEY?: string;
+  TELEGRAM_BOT_TOKEN?: string;
+  TELEGRAM_CHAT_ID?: string;
+}
+
+// Owner notification — fires on every successful signup. Best-effort:
+// a Telegram outage must never fail the signup itself.
+async function notifyTelegram(
+  env: Env,
+  payload: {
+    email: string;
+    name: string | null;
+    note: string | null;
+    source: string;
+    position: number;
+    duplicate: boolean;
+    referredBy: string | null;
+  },
+) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
+  const lines = [
+    payload.duplicate ? "🔁 Повторная заявка в waitlist" : "🏠 Новая заявка в waitlist",
+    `#${payload.position} · ${payload.email}`,
+    payload.name ? `Имя: ${payload.name}` : null,
+    payload.note ? `Заметка: ${payload.note}` : null,
+    `Источник: ${payload.source}${payload.referredBy ? ` · реф: ${payload.referredBy}` : ""}`,
+  ].filter(Boolean);
+  try {
+    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: lines.join("\n") }),
+    });
+  } catch (e) {
+    console.warn("[waitlist] telegram notify failed:", e instanceof Error ? e.message : String(e));
+  }
 }
 
 async function verifyTurnstile(
@@ -214,6 +249,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
   }
+
+  await notifyTelegram(env, {
+    email,
+    name,
+    note,
+    source,
+    position: result.position,
+    duplicate: !!result.duplicate,
+    referredBy,
+  });
 
   return Response.json({
     ok: true,

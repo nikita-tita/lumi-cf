@@ -211,7 +211,7 @@ export default function PromptCopyPage() {
             <span aria-hidden>·</span>
             <span>Updated July 2026</span>
             <span aria-hidden>·</span>
-            <span>Pack 21 of 30 · @lumi.estate</span>
+            <span>Pack 21 of 33 · @lumi.estate</span>
           </div>
         </div>
       </section>
