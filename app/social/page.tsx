@@ -112,9 +112,9 @@ const LINKS: LinkItem[] = [
     external: true,
   },
   {
-    label: "Support Lumi Pro",
-    sub: "Donate · keep the app free for everyone",
-    href: "/pro",
+    label: "Join the waitlist",
+    sub: "Private beta · invites go out in waves",
+    href: "/join",
     icon: <IconHeart />,
   },
   {
@@ -249,9 +249,9 @@ export default function SocialLinksPage() {
 
         {/* Footer */}
         <p className="mt-12 text-xs text-white/35 text-center max-w-[300px]">
-          Lumi is a donation-supported product.
+          One plan, everything included — €9/month
           <br />
-          All features free, forever.
+          after a 7-day free trial. Beta is free.
         </p>
       </main>
     </div>

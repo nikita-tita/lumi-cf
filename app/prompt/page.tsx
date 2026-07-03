@@ -185,7 +185,7 @@ function PromoHero() {
             </Link>
           </div>
           <p className="mt-6 text-xs sm:text-sm text-slate-500 font-mono">
-            11-min read · Updated April 2026
+            11-min read · Updated July 2026
           </p>
         </div>
 
@@ -538,7 +538,7 @@ export default function PromptPage() {
           <div className="mt-8 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500 font-mono">
             <span>11-min read</span>
             <span aria-hidden>·</span>
-            <span>Updated April 2026</span>
+            <span>Updated July 2026</span>
             <span aria-hidden>·</span>
             <span>From the carousel · @lumi.estate</span>
           </div>

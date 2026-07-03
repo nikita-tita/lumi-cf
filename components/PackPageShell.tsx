@@ -50,7 +50,7 @@ export function PackHero({
             {[
               "Voice → CRM, auto. No forms.",
               "Works offline. Syncs when you're back.",
-              "Free for agents in EU · LatAm · MENA.",
+              "Free during beta · then €9/month, everything included.",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
                 <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
@@ -140,7 +140,7 @@ export function PackBottomAd({
             {[
               "Voice → structured CRM, automatically",
               "No forms. No data entry. No copy-paste.",
-              "Free for agents in EU · LatAm · MENA",
+              "Free during beta · then €9/month, everything included",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
                 <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
