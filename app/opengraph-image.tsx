@@ -15,18 +15,18 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background:
-            "radial-gradient(120% 80% at 0% 0%, rgba(99,102,241,0.55), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(236,72,153,0.45), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
-          color: "#fff",
+          background: "#FAFAFA",
+          color: "#09090B",
+          borderBottom: "16px solid #2563EB",
         }}
       >
         <div
           style={{
             fontSize: 24,
-            letterSpacing: 4,
-            color: "#818cf8",
+            letterSpacing: 5,
+            color: "#2563EB",
             textTransform: "uppercase",
-            marginBottom: 24,
+            marginBottom: 28,
             fontFamily: "monospace",
           }}
         >
@@ -35,7 +35,7 @@ export default async function OpengraphImage() {
         <div
           style={{
             fontSize: 84,
-            fontWeight: 700,
+            fontWeight: 600,
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             display: "flex",
@@ -43,21 +43,12 @@ export default async function OpengraphImage() {
           }}
         >
           <div>Chat-first AI</div>
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            for real estate agents
-          </div>
+          <div style={{ color: "#2563EB" }}>for real estate agents</div>
         </div>
         <div
           style={{
             fontSize: 28,
-            color: "rgba(255,255,255,0.7)",
+            color: "#52525B",
             marginTop: 32,
             maxWidth: 900,
             lineHeight: 1.4,
@@ -69,10 +60,10 @@ export default async function OpengraphImage() {
         <div
           style={{
             position: "absolute",
-            bottom: 60,
+            bottom: 52,
             right: 80,
             fontSize: 22,
-            color: "rgba(255,255,255,0.5)",
+            color: "#A1A1AA",
             fontFamily: "monospace",
           }}
         >

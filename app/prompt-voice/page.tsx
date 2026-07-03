@@ -119,7 +119,7 @@ function PromptCardBlock({
           className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center text-xl lg:text-2xl font-mono font-semibold text-white shadow-md"
           style={{
             background:
-              "linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #ec4899 100%)",
+              "#2563EB",
           }}
         >
           {prompt.num}
@@ -179,7 +179,7 @@ export default function PromptVoicePage() {
           className="absolute inset-0 -z-10 opacity-70"
           style={{
             background:
-              "radial-gradient(50% 50% at 80% 0%, rgba(236,72,153,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(99,102,241,0.10), transparent)",
+              "radial-gradient(50% 50% at 80% 0%, rgba(217,119,6,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(37,99,235,0.10), transparent)",
           }}
         />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12">
@@ -192,7 +192,7 @@ export default function PromptVoicePage() {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)",
+                  "#2563EB",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",

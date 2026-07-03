@@ -31,18 +31,19 @@ const cols = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-32">
+    <footer className="border-t border-border mt-32 bg-surface">
       <div className="container-lumi py-16">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-12">
           <div>
             <Logo />
             <p className="text-text-dim text-sm mt-4 max-w-xs leading-relaxed">
-              The AI calendar and CRM built for real estate agents. From Helsinki, for agents everywhere.
+              The AI calendar and CRM built for real estate agents. One app for
+              the showings, the pipeline and the paperwork.
             </p>
           </div>
           {cols.map((col) => (
             <div key={col.title}>
-              <h4 className="text-text text-sm font-semibold mb-4">{col.title}</h4>
+              <h4 className="eyebrow mb-5">{col.title}</h4>
               <ul className="space-y-3">
                 {col.links.map((l) => (
                   <li key={l.href}>
@@ -58,12 +59,12 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="border-t border-border mt-16 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="rule mt-16 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-text-mute">
             &copy; 2026 Lumi service app &mdash; operated by Nikita Titov, private individual.
           </p>
           <p className="text-xs text-text-mute">
-            Private beta opens June 2026.
+            Private beta &mdash; invites go out in waves
           </p>
         </div>
       </div>

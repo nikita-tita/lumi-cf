@@ -13,16 +13,16 @@ type Params = {
 };
 
 const BRAND = {
-  bg: "#F8FAFC",
+  bg: "#FAFAFA",
   surface: "#FFFFFF",
-  surface2: "#F1F5F9",
-  text: "#0F172A",
-  textDim: "#475569",
-  textMute: "#94A3B8",
-  border: "#E2E8F0",
-  indigo: "#6366F1",
-  violet: "#8B5CF6",
-  pink: "#EC4899",
+  surface2: "#F4F4F5",
+  text: "#09090B",
+  textDim: "#52525B",
+  textMute: "#A1A1AA",
+  border: "#E4E4E7",
+  indigo: "#2563EB",
+  violet: "#2563EB",
+  pink: "#D97706",
 };
 
 function escapeHtml(s: string): string {
@@ -52,7 +52,7 @@ export function renderWelcomeText(p: Params): string {
     "",
     dup,
     "",
-    "We'll email you twice: once when private beta opens (June 2026), once when we launch publicly (Q3 2026). That's it. No spam.",
+    "We'll email you twice: once when your beta invite is ready, once when we launch publicly. That's it. No spam.",
     "",
     "Here's what you signed up for:",
     "",
@@ -92,7 +92,7 @@ export function renderWelcomeHtml(p: Params): string {
     ? `You were already on the Lumi waitlist. Position #${p.position}.`
     : `Thanks for joining Lumi. You're #${p.position}. Here's what happens next.`;
 
-  const auroraGradient = `linear-gradient(135deg, ${BRAND.indigo} 0%, ${BRAND.violet} 50%, ${BRAND.pink} 100%)`;
+  const auroraGradient = BRAND.indigo;
 
   return `<!doctype html>
 <html lang="en">
@@ -169,7 +169,7 @@ export function renderWelcomeHtml(p: Params): string {
                 <div style="font-size:84px;line-height:1;font-weight:800;letter-spacing:-0.04em;color:${BRAND.violet};" class="position-num">#${p.position}</div>
 
                 <p style="margin:24px 0 0 0;font-size:15px;line-height:1.6;color:${BRAND.textDim};">
-                  We'll email you twice — once when private beta opens in <strong style="color:${BRAND.text};">June 2026</strong>, once when we launch publicly in <strong style="color:${BRAND.text};">Q3 2026</strong>. That's it. No spam, no filler, no "nurture sequence".
+                  We'll email you twice — once when your <strong style="color:${BRAND.text};">beta invite</strong> is ready, once when we <strong style="color:${BRAND.text};">launch publicly</strong>. That's it. No spam, no filler, no "nurture sequence".
                 </p>
               </td>
             </tr>
@@ -274,7 +274,7 @@ export function renderWelcomeHtml(p: Params): string {
             <!-- sign-off -->
             <tr>
               <td style="padding:0 8px;">
-                <p style="margin:0 0 6px 0;font-size:15px;line-height:1.5;color:${BRAND.textDim};">From Helsinki, for agents everywhere.</p>
+                <p style="margin:0 0 6px 0;font-size:15px;line-height:1.5;color:${BRAND.textDim};">One app for the showings, the pipeline and the paperwork.</p>
                 <p style="margin:0 0 2px 0;font-size:16px;font-weight:700;color:${BRAND.text};">— Nikita</p>
                 <p style="margin:0;font-size:13px;color:${BRAND.textMute};">Founder, Lumi</p>
               </td>

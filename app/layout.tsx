@@ -1,8 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@/components/Analytics";
+
+const sans = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lumi.estate"),
@@ -39,9 +51,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: "/apple-icon",
   },
 };
@@ -59,11 +69,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen bg-bg text-text font-sans antialiased">
-        <div className="fixed inset-0 -z-10 bg-radial-aurora" />
-        <div className="fixed inset-0 -z-10 bg-radial-violet" />
-        <div className="fixed inset-0 -z-10 bg-radial-pink" />
         <Nav />
         <main className="pt-16">{children}</main>
         <Footer />

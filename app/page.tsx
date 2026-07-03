@@ -3,6 +3,7 @@ import { Pillars } from "@/components/sections/Pillars";
 import { DayWithLumi } from "@/components/sections/DayWithLumi";
 import { Comparison } from "@/components/sections/Comparison";
 import { Personas } from "@/components/sections/Personas";
+import { WaitlistHow } from "@/components/sections/WaitlistHow";
 import { Faq } from "@/components/sections/Faq";
 import { faqItems } from "@/components/sections/faq-data";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -21,7 +22,6 @@ export default function HomePage() {
         logo: "https://lumi.estate/icon.png",
         description:
           "Lumi is the AI calendar and CRM built for real estate agents. Voice-first capture, offline pipeline, built-in deal tracking.",
-        foundingLocation: { "@type": "Place", name: "Helsinki, Finland" },
       },
       {
         "@type": "SoftwareApplication",
@@ -52,6 +52,7 @@ export default function HomePage() {
       <DayWithLumi />
       <Comparison />
       <Personas />
+      <WaitlistHow />
       <Faq />
       <FinalCta />
     </>

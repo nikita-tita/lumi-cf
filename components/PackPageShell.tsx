@@ -19,7 +19,7 @@ export function PackHero({
       className="relative isolate overflow-hidden min-h-[85vh] flex items-center"
       style={{
         background:
-          "radial-gradient(120% 80% at 0% 0%, rgba(99,102,241,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(236,72,153,0.20), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
+          "#2563EB",
       }}
     >
       <div className="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-12 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center py-16 sm:py-20 lg:py-24">
@@ -33,7 +33,7 @@ export function PackHero({
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
+                  "#FAFAFA",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -53,7 +53,7 @@ export function PackHero({
               "Free for agents in EU · LatAm · MENA.",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
-                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 flex-shrink-0" />
+                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
                 <span className="text-sm sm:text-base">{t}</span>
               </li>
             ))}
@@ -64,7 +64,7 @@ export function PackHero({
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)",
+                  "#D97706",
               }}
             >
               Join the waitlist →
@@ -110,7 +110,7 @@ export function PackBottomAd({
         className="absolute inset-0 -z-10 rounded-[28px] sm:rounded-[36px]"
         style={{
           background:
-            "radial-gradient(120% 80% at 0% 0%, rgba(99,102,241,0.22), transparent 60%), radial-gradient(120% 80% at 100% 100%, rgba(236,72,153,0.22), transparent 60%), linear-gradient(180deg, #0f0f14 0%, #1c1c28 100%)",
+            "#2563EB",
         }}
       />
       <div className="w-full px-6 sm:px-10 lg:px-14 py-14 sm:py-20 lg:py-24 rounded-[28px] sm:rounded-[36px] text-slate-100 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
@@ -124,7 +124,7 @@ export function PackBottomAd({
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
+                  "#FAFAFA",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -143,7 +143,7 @@ export function PackBottomAd({
               "Free for agents in EU · LatAm · MENA",
             ].map((t) => (
               <li key={t} className="flex items-start gap-3">
-                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 flex-shrink-0" />
+                <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-[#D97706] flex-shrink-0" />
                 <span className="text-sm sm:text-base">{t}</span>
               </li>
             ))}
@@ -154,7 +154,7 @@ export function PackBottomAd({
               className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base sm:text-lg font-semibold text-white shadow-lg shadow-indigo-900/40 transition hover:translate-y-[-1px]"
               style={{
                 background:
-                  "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)",
+                  "#D97706",
               }}
             >
               Join the waitlist

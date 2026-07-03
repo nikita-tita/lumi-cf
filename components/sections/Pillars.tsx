@@ -1,26 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageCircle, Kanban, FileSearch } from "lucide-react";
 
 const pillars = [
   {
-    icon: MessageCircle,
+    n: "01",
     title: "Chat that acts",
     desc: "Speak or type. Lumi does.",
-    long: "Say or write what happened — \u201cshowed Clara the Gràcia apartment, she wants a second viewing Friday\u201d — and Lumi schedules the viewing, updates her card, and drafts the follow-up. Inline confirm cards let you approve with a swipe.",
+    long: "Say or write what happened — “showed Clara the Gràcia apartment, she wants a second viewing Friday” — and Lumi schedules the viewing, updates her card, and drafts the follow-up. Inline confirm cards let you approve with a swipe.",
   },
   {
-    icon: Kanban,
+    n: "02",
     title: "A pipeline that moves itself",
     desc: "New → Contacted → Showing → Offer → Closed.",
     long: "After each conversation or showing, Lumi moves the right card to the right stage — from what you said, not a form you filled. Multi-currency (EUR, USD, AED), eight languages, offline-first.",
   },
   {
-    icon: FileSearch,
+    n: "03",
     title: "Documents that answer",
     desc: "Ask a PDF anything. Get cited answers.",
-    long: "Upload listings, contracts, HOA docs. Ask \u201cwhat\u2019s the maintenance fee for Apt 4?\u201d in chat and Lumi pulls the number from the PDF with a source citation. No grep, no tabs, no guesswork.",
+    long: "Upload listings, contracts, HOA docs. Ask “what’s the maintenance fee for Apt 4?” in chat and Lumi pulls the number from the PDF with a source citation. No grep, no tabs, no guesswork.",
   },
 ];
 
@@ -29,9 +28,7 @@ export function Pillars() {
     <section className="section">
       <div className="container-lumi">
         <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">
-            Meet Lumi
-          </p>
+          <p className="eyebrow mb-4">Meet Lumi</p>
           <h2 className="font-display text-4xl md:text-5xl tracking-tight text-text">
             Three things, chat-first.
           </h2>
@@ -42,29 +39,28 @@ export function Pillars() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mt-16">
-          {pillars.map((p, i) => {
-            const Icon = p.icon;
-            return (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="relative group rounded-card p-8 bg-surface border border-border shadow-soft hover:shadow-card transition-all duration-300"
-              >
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl bg-accent/12 flex items-center justify-center mb-6">
-                    <Icon size={22} className="text-accent" />
-                  </div>
-                  <h3 className="text-xl font-bold text-text">{p.title}</h3>
-                  <p className="text-sm text-accent mt-2 font-medium">{p.desc}</p>
-                  <p className="text-sm text-text-dim mt-4 leading-relaxed">{p.long}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div className="rule mt-16">
+          {pillars.map((p, i) => (
+            <motion.article
+              key={p.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="grid md:grid-cols-[80px_1fr_1.4fr] gap-4 md:gap-10 py-10 border-b border-border group"
+            >
+              <span className="font-mono text-sm text-text-mute pt-1.5">{p.n}</span>
+              <div>
+                <h3 className="font-display text-2xl md:text-[28px] text-text leading-snug group-hover:text-accent transition-colors">
+                  {p.title}
+                </h3>
+                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-accent mt-3">
+                  {p.desc}
+                </p>
+              </div>
+              <p className="text-[15px] text-text-dim leading-relaxed">{p.long}</p>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>

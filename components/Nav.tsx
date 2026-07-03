@@ -23,12 +23,12 @@ export function Nav() {
           <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+        <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm text-text-dim hover:text-text transition-colors"
+              className="text-sm font-medium text-text-dim hover:text-text transition-colors"
             >
               {l.label}
             </Link>
@@ -62,7 +62,7 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-base text-text-dim hover:text-text transition-colors"
+                className="text-base font-medium text-text-dim hover:text-text transition-colors"
               >
                 {l.label}
               </Link>

@@ -153,7 +153,7 @@ export default function PromptArrivalPage() {
           className="absolute inset-0 -z-10 opacity-70"
           style={{
             background:
-              "radial-gradient(50% 50% at 80% 0%, rgba(236,72,153,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(99,102,241,0.10), transparent)",
+              "radial-gradient(50% 50% at 80% 0%, rgba(217,119,6,0.08), transparent), radial-gradient(40% 40% at 0% 30%, rgba(37,99,235,0.10), transparent)",
           }}
         />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12">
@@ -166,7 +166,7 @@ export default function PromptArrivalPage() {
             <span
               style={{
                 background:
-                  "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)",
+                  "#2563EB",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 color: "transparent",
@@ -244,7 +244,7 @@ duration: 14m 22s · engaged tier
                   className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-mono font-semibold text-white text-base sm:text-lg shadow-md"
                   style={{
                     background:
-                      "linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #ec4899 100%)",
+                      "#2563EB",
                   }}
                 >
                   {s.n}
@@ -317,7 +317,7 @@ duration: 14m 22s · engaged tier
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white shadow-lg shadow-indigo-900/30 transition hover:translate-y-[-1px] whitespace-nowrap flex-shrink-0"
             style={{
               background:
-                "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)",
+                "#2563EB",
             }}
           >
             Open Claude →
