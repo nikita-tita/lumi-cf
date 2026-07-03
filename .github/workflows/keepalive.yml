@@ -1,0 +1,22 @@
+name: Keep Supabase awake
+
+# Supabase free-tier pauses the database after ~7 days of inactivity, which
+# silently breaks the waitlist (the API degrades to log-only mode). This cron
+# hits GET /api/waitlist twice a day — the count query inside it is enough
+# activity to keep the project alive. It also fails loudly if the endpoint
+# starts erroring, so a paused/broken pipeline shows up as a red run.
+
+on:
+  schedule:
+    - cron: "17 6,18 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping waitlist endpoint
+        run: |
+          body=$(curl -sf -m 30 https://lumi.estate/api/waitlist)
+          echo "response: $body"
+          echo "$body" | grep -q '"count"' || { echo "unexpected response"; exit 1; }
