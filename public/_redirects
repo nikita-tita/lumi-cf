@@ -1,2 +1,5 @@
 # 301 www → apex (preserves path + query)
 https://www.lumi.estate/* https://lumi.estate/:splat 301!
+
+# 301 marketing alias: /dossier → /prompt-dossier (codeword DOSSIER)
+/dossier /prompt-dossier 301!
