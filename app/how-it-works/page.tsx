@@ -46,23 +46,16 @@ export default function HowItWorksPage() {
       />
       <section className="pb-20">
         <div className="container-lumi max-w-3xl">
-          <div className="bg-surface border border-border rounded-card aspect-video flex items-center justify-center mb-16 relative overflow-hidden shadow-soft">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/12 to-accent-2/8" aria-hidden />
-            <div className="relative text-center">
-              <div className="w-16 h-16 rounded-full bg-white border border-border flex items-center justify-center mx-auto mb-4 shadow-soft">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-accent ml-1"
-                  aria-hidden
-                >
-                  <path d="M5 3l12 7-12 7V3z" />
-                </svg>
-              </div>
-              <p className="text-sm text-text-dim">60-second explainer &mdash; coming soon</p>
-            </div>
+          <div className="border border-border rounded-card aspect-video mb-16 relative overflow-hidden shadow-soft bg-black">
+            <video
+              className="w-full h-full object-cover"
+              controls
+              playsInline
+              preload="metadata"
+              poster="/lumi-explainer-poster.jpg"
+            >
+              <source src="/lumi-explainer.mp4" type="video/mp4" />
+            </video>
           </div>
 
           <div className="space-y-10">
