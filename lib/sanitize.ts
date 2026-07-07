@@ -154,6 +154,6 @@ export function buildRejectedSummary(check: Extract<SensitiveCheck, { ok: false 
 
 export function isSensitiveSanitiseConfigured(): boolean {
   // No env needed; sanitizer is always active. Kept for symmetry with
-  // other lib helpers (isSupabaseConfigured, etc).
+  // other lib config helpers.
   return true;
 }

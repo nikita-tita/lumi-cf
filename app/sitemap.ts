@@ -46,7 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/prompt-draft",
     "/prompt-scorer",
     "/prompt-voice",
-    "/share",
     "/social",
     "/press",
     "/privacy",
