@@ -1,15 +1,15 @@
 /**
  * Renders the waitlist welcome email as email-safe HTML + a plain-text
  * fallback. All layout uses tables + inline styles; no external CSS or fonts.
- * Max width 600px, mobile-friendly. Matches the landing aurora theme.
+ * Max width 600px, mobile-friendly. Matches the landing theme.
+ *
+ * No queue position or referral link anymore — the waitlist has no datastore,
+ * so there is no position to show and no per-user referral code to hand out.
  */
 
 type Params = {
   name: string | null;
   email: string;
-  position: number;
-  refCode: string;
-  duplicate?: boolean;
 };
 
 const BRAND = {
@@ -21,8 +21,6 @@ const BRAND = {
   textMute: "#A1A1AA",
   border: "#E4E4E7",
   indigo: "#2563EB",
-  violet: "#2563EB",
-  pink: "#D97706",
 };
 
 function escapeHtml(s: string): string {
@@ -34,23 +32,17 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
-export function renderWelcomeSubject(p: Params): string {
-  if (p.duplicate) return `You're still on the Lumi list · #${p.position}`;
-  return `You're in. Welcome to Lumi · #${p.position}`;
+export function renderWelcomeSubject(_p: Params): string {
+  return "You're in. Welcome to Lumi";
 }
 
 export function renderWelcomeText(p: Params): string {
   const greeting = p.name ? `Hi ${p.name},` : `Hi there,`;
-  const shareUrl = `https://lumi.estate/?ref=${p.refCode}`;
-  const copyUrl = `https://lumi.estate/share?ref=${p.refCode}&action=copy`;
-  const dup = p.duplicate
-    ? `You were already on the list — nothing new to do. Your position: #${p.position}.`
-    : `You're #${p.position} on the waitlist.`;
 
   return [
     greeting,
     "",
-    dup,
+    "You're on the Lumi waitlist.",
     "",
     "We'll email you twice: once when your beta invite is ready, once when we launch publicly. That's it. No spam.",
     "",
@@ -59,12 +51,6 @@ export function renderWelcomeText(p: Params): string {
     "• Chat that acts — speak or type and Lumi schedules showings, updates your pipeline, drafts follow-ups.",
     "• A pipeline that moves itself — after each conversation the right card moves to the right stage.",
     "• Documents that answer — upload listings, contracts, HOA docs, then ask anything. Cited answers.",
-    "",
-    "Want to move up? Tap to copy your link:",
-    `${copyUrl}`,
-    "",
-    "Or paste this into a message yourself:",
-    shareUrl,
     "",
     "Built for real estate agents in EU, LatAm, and MENA.",
     "",
@@ -79,20 +65,10 @@ export function renderWelcomeText(p: Params): string {
 }
 
 export function renderWelcomeHtml(p: Params): string {
-  const greeting = p.name
-    ? `Hi ${escapeHtml(p.name)},`
-    : "Hi there,";
-  const shareUrl = `https://lumi.estate/?ref=${p.refCode}`;
-  const copyUrl = `https://lumi.estate/share?ref=${p.refCode}&action=copy`;
-  const positionText = p.duplicate
-    ? "You were already on the list —"
-    : "You're on the list —";
+  const greeting = p.name ? `Hi ${escapeHtml(p.name)},` : "Hi there,";
 
-  const preheader = p.duplicate
-    ? `You were already on the Lumi waitlist. Position #${p.position}.`
-    : `Thanks for joining Lumi. You're #${p.position}. Here's what happens next.`;
-
-  const auroraGradient = BRAND.indigo;
+  const preheader =
+    "Thanks for joining Lumi. Here's what happens next.";
 
   return `<!doctype html>
 <html lang="en">
@@ -121,14 +97,9 @@ export function renderWelcomeHtml(p: Params): string {
       }
     </script>
     <style>
-      /* Email clients strip most selectors — we only use inline styles below.
-         This block is for clients that DO support media queries (iOS Mail,
-         Apple Mail, Gmail App on some devices). */
       @media (max-width: 620px) {
         .container { width: 100% !important; padding: 0 20px !important; }
         .h1 { font-size: 28px !important; line-height: 1.15 !important; }
-        .position-num { font-size: 60px !important; }
-        .pill-share { display: block !important; }
       }
     </style>
   </head>
@@ -147,7 +118,7 @@ export function renderWelcomeHtml(p: Params): string {
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td style="padding-right:8px;vertical-align:middle;">
-                      <div style="width:28px;height:28px;border-radius:8px;background:${auroraGradient};display:inline-block;line-height:28px;text-align:center;font-size:13px;font-weight:800;color:#fff;">L</div>
+                      <div style="width:28px;height:28px;border-radius:8px;background:${BRAND.indigo};display:inline-block;line-height:28px;text-align:center;font-size:13px;font-weight:800;color:#fff;">L</div>
                     </td>
                     <td style="vertical-align:middle;font-size:18px;font-weight:800;letter-spacing:-0.02em;color:${BRAND.text};">Lumi<span style="color:${BRAND.indigo};">.</span></td>
                   </tr>
@@ -155,20 +126,13 @@ export function renderWelcomeHtml(p: Params): string {
               </td>
             </tr>
 
-            <!-- aurora hero card -->
+            <!-- hero card -->
             <tr>
-              <td style="background:${BRAND.surface};border:1px solid ${BRAND.border};border-radius:20px;padding:48px 40px 36px 40px;">
+              <td style="background:${BRAND.surface};border:1px solid ${BRAND.border};border-radius:20px;padding:48px 40px 40px 40px;">
                 <p style="margin:0 0 14px 0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:${BRAND.indigo};">Welcome to Lumi</p>
-                <h1 class="h1" style="margin:0 0 12px 0;font-size:34px;line-height:1.1;letter-spacing:-0.02em;color:${BRAND.text};font-weight:700;">${greeting}</h1>
-                <p style="margin:0 0 28px 0;font-size:16px;line-height:1.55;color:${BRAND.textDim};">${positionText}</p>
-
-                <!-- position number — solid violet for guaranteed legibility
-                     across all email clients (background-clip:text fails in
-                     Gmail and renders the gradient as a rectangle behind
-                     transparent text — looks invisible). -->
-                <div style="font-size:84px;line-height:1;font-weight:800;letter-spacing:-0.04em;color:${BRAND.violet};" class="position-num">#${p.position}</div>
-
-                <p style="margin:24px 0 0 0;font-size:15px;line-height:1.6;color:${BRAND.textDim};">
+                <h1 class="h1" style="margin:0 0 16px 0;font-size:34px;line-height:1.1;letter-spacing:-0.02em;color:${BRAND.text};font-weight:700;">${greeting}</h1>
+                <p style="margin:0 0 12px 0;font-size:16px;line-height:1.55;color:${BRAND.text};font-weight:600;">You're on the list.</p>
+                <p style="margin:0;font-size:15px;line-height:1.6;color:${BRAND.textDim};">
                   We'll email you twice — once when your <strong style="color:${BRAND.text};">beta invite</strong> is ready, once when we <strong style="color:${BRAND.text};">launch publicly</strong>. That's it. No spam, no filler, no "nurture sequence".
                 </p>
               </td>
@@ -231,41 +195,6 @@ export function renderWelcomeHtml(p: Params): string {
                     </td>
                   </tr>
                 </table>
-              </td>
-            </tr>
-
-            <tr><td style="height:20px;line-height:20px;font-size:0;">&nbsp;</td></tr>
-
-            <!-- referral -->
-            <tr>
-              <td style="background:${auroraGradient};border-radius:20px;padding:36px 40px;color:#ffffff;">
-                <p style="margin:0 0 8px 0;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.9);">Move up</p>
-                <h2 style="margin:0 0 14px 0;font-size:24px;line-height:1.2;color:#ffffff;font-weight:700;letter-spacing:-0.015em;">Share your link, climb the list.</h2>
-                <p style="margin:0 0 22px 0;font-size:14px;line-height:1.55;color:rgba(255,255,255,0.85);">Every agent who joins from your link moves you up. No gimmicks.</p>
-
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td>
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                          <td style="border-radius:12px;background:#ffffff;">
-                            <a href="${copyUrl}" style="display:inline-block;padding:14px 22px;font-size:15px;font-weight:700;color:${BRAND.indigo};text-decoration:none;letter-spacing:-0.01em;">
-                              📋 &nbsp;Copy my link
-                            </a>
-                          </td>
-                          <td style="width:8px;line-height:8px;font-size:0;">&nbsp;</td>
-                          <td style="border-radius:12px;border:1px solid rgba(255,255,255,0.45);">
-                            <a href="${shareUrl}" style="display:inline-block;padding:13px 18px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:-0.01em;">
-                              Open link &nbsp;→
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-
-                <p style="margin:18px 0 0 0;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.75);font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all;">${shareUrl.replace("https://", "")}</p>
               </td>
             </tr>
 

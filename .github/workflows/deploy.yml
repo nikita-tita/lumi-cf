@@ -55,12 +55,7 @@ jobs:
 
           echo "-> waitlist GET"
           body=$(curl -s -m 15 "$WAITLIST_URL")
-          if echo "$body" | grep -q '"degraded":true'; then
-            echo "FAIL: waitlist API is in degraded mode (Supabase down?)"
-            echo "Response: $body"
-            exit 1
-          fi
-          if ! echo "$body" | grep -q '"count"'; then
+          if ! echo "$body" | grep -q '"ok":true'; then
             echo "FAIL: waitlist API returned unexpected body"
             echo "Response: $body"
             exit 1

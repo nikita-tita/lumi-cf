@@ -23,7 +23,7 @@ declare global {
 type State =
   | { kind: "idle" }
   | { kind: "loading" }
-  | { kind: "success"; position: number; refCode: string }
+  | { kind: "success" }
   | { kind: "error"; message: string };
 
 export function WaitlistForm({
@@ -98,12 +98,8 @@ export function WaitlistForm({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      setState({ kind: "success", position: data.position, refCode: data.refCode });
-      track("waitlist_submitted", {
-        source: pathname || "/",
-        position: data.position,
-        duplicate: !!data.duplicate,
-      });
+      setState({ kind: "success" });
+      track("waitlist_submitted", { source: pathname || "/" });
     } catch (err) {
       setState({
         kind: "error",
@@ -122,10 +118,6 @@ export function WaitlistForm({
   }
 
   if (state.kind === "success") {
-    const shareUrl =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/?ref=${state.refCode}`
-        : `https://lumi.estate/?ref=${state.refCode}`;
     return (
       <div className="glass rounded-card p-6 max-w-xl">
         <div className="flex items-center gap-3">
@@ -135,21 +127,10 @@ export function WaitlistForm({
           <div>
             <p className="text-text font-semibold">You&apos;re in.</p>
             <p className="text-sm text-text-dim">
-              Position #{state.position}. Move up by sharing your link.
+              We&apos;ll email you when your beta invite is ready — and once more when we
+              launch. No spam.
             </p>
           </div>
-        </div>
-        <div className="mt-4 flex items-center gap-2">
-          <code className="flex-1 text-xs text-text-dim bg-surface-2 border border-border rounded-btn px-3 py-2 truncate">
-            {shareUrl}
-          </code>
-          <button
-            type="button"
-            onClick={() => navigator.clipboard?.writeText(shareUrl)}
-            className="btn-ghost rounded-btn px-4 py-2 text-sm"
-          >
-            Copy
-          </button>
         </div>
       </div>
     );

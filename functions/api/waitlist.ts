@@ -1,50 +1,147 @@
 /// <reference types="@cloudflare/workers-types" />
-import { createClient } from "@supabase/supabase-js";
 import {
   renderWelcomeHtml,
   renderWelcomeSubject,
   renderWelcomeText,
 } from "../../lib/welcome-email";
 
+// No datastore. Leads are delivered straight to the owner:
+//   1. Telegram  — primary channel (always on if the bot secrets are set).
+//   2. Email      — secondary channel via Resend (owner notification + a
+//                   courtesy welcome to the applicant).
+// The old Supabase waitlist (project lumi-rag) was deprovisioned; writing to
+// it silently lost every signup. This path has no single point of failure that
+// can swallow a lead without a trace.
 interface Env {
-  SUPABASE_URL: string;
-  SUPABASE_SERVICE_ROLE_KEY: string;
   RESEND_API_KEY?: string;
   TURNSTILE_SECRET_KEY?: string;
   TELEGRAM_BOT_TOKEN?: string;
   TELEGRAM_CHAT_ID?: string;
+  OWNER_EMAIL?: string;
 }
 
-// Owner notification — fires on every successful signup. Best-effort:
-// a Telegram outage must never fail the signup itself.
-async function notifyTelegram(
-  env: Env,
-  payload: {
-    email: string;
-    name: string | null;
-    note: string | null;
-    source: string;
-    position: number;
-    duplicate: boolean;
-    referredBy: string | null;
-  },
-) {
-  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
+const OWNER_EMAIL_FALLBACK = "hello@lumi.estate";
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type Lead = {
+  email: string;
+  name: string | null;
+  note: string | null;
+  source: string;
+  referredBy: string | null;
+};
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Primary delivery: Telegram DM to the owner. Best-effort — returns whether
+// the lead actually reached Telegram so the caller can detect total failure.
+async function notifyTelegram(env: Env, lead: Lead): Promise<boolean> {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
   const lines = [
-    payload.duplicate ? "🔁 Повторная заявка в waitlist" : "🏠 Новая заявка в waitlist",
-    `#${payload.position} · ${payload.email}`,
-    payload.name ? `Имя: ${payload.name}` : null,
-    payload.note ? `Заметка: ${payload.note}` : null,
-    `Источник: ${payload.source}${payload.referredBy ? ` · реф: ${payload.referredBy}` : ""}`,
+    "🏠 Новая заявка в waitlist",
+    lead.email,
+    lead.name ? `Имя: ${lead.name}` : null,
+    lead.note ? `Заметка: ${lead.note}` : null,
+    `Источник: ${lead.source}${lead.referredBy ? ` · реф: ${lead.referredBy}` : ""}`,
   ].filter(Boolean);
   try {
-    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: lines.join("\n") }),
-    });
+    const res = await fetch(
+      `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: lines.join("\n") }),
+      },
+    );
+    if (!res.ok) console.warn("[waitlist] telegram non-ok:", res.status);
+    return res.ok;
   } catch (e) {
-    console.warn("[waitlist] telegram notify failed:", e instanceof Error ? e.message : String(e));
+    console.warn("[waitlist] telegram failed:", e instanceof Error ? e.message : String(e));
+    return false;
+  }
+}
+
+// Secondary delivery: email the lead to the owner via Resend. reply_to is the
+// applicant so the owner can answer them directly from the inbox.
+async function notifyOwnerEmail(
+  apiKey: string,
+  ownerEmail: string,
+  lead: Lead,
+): Promise<boolean> {
+  const text = [
+    "Новая заявка в waitlist Lumi.",
+    "",
+    `Email: ${lead.email}`,
+    `Имя: ${lead.name || "—"}`,
+    `Заметка: ${lead.note || "—"}`,
+    `Источник: ${lead.source}`,
+    `Реферал: ${lead.referredBy || "—"}`,
+  ].join("\n");
+  const row = (k: string, v: string) =>
+    `<tr><td style="padding:2px 12px 2px 0;color:#52525B;">${k}</td><td style="color:#09090B;">${v}</td></tr>`;
+  const html = `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.6;color:#09090B;">
+  <p style="font-weight:700;margin:0 0 12px;">🏠 Новая заявка в waitlist Lumi</p>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;">
+    ${row("Email", `<a href="mailto:${escapeHtml(lead.email)}" style="color:#2563EB;">${escapeHtml(lead.email)}</a>`)}
+    ${row("Имя", lead.name ? escapeHtml(lead.name) : "—")}
+    ${row("Заметка", lead.note ? escapeHtml(lead.note) : "—")}
+    ${row("Источник", escapeHtml(lead.source))}
+    ${row("Реферал", lead.referredBy ? escapeHtml(lead.referredBy) : "—")}
+  </table>
+</div>`;
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Lumi <hello@lumi.estate>",
+        to: [ownerEmail],
+        subject: `Новая заявка: ${lead.email}`,
+        reply_to: lead.email,
+        text,
+        html,
+      }),
+    });
+    if (!res.ok) console.warn("[waitlist] owner email non-ok:", res.status, await res.text());
+    return res.ok;
+  } catch (e) {
+    console.warn("[waitlist] owner email failed:", e instanceof Error ? e.message : String(e));
+    return false;
+  }
+}
+
+// Courtesy welcome to the applicant. Non-blocking, failure is only logged.
+async function sendWelcomeEmail(apiKey: string, lead: Lead): Promise<void> {
+  const params = { name: lead.name, email: lead.email };
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Lumi <hello@lumi.estate>",
+        to: [lead.email],
+        subject: renderWelcomeSubject(params),
+        html: renderWelcomeHtml(params),
+        text: renderWelcomeText(params),
+        reply_to: "hello@lumi.estate",
+      }),
+    });
+    if (!res.ok) console.warn("[waitlist] welcome non-ok:", res.status, await res.text());
+  } catch (e) {
+    console.warn("[waitlist] welcome failed:", e instanceof Error ? e.message : String(e));
   }
 }
 
@@ -72,113 +169,6 @@ async function verifyTurnstile(
   }
 }
 
-const SEED = 1200;
-const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function randomRef() {
-  const bytes = new Uint8Array(4);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-type InsertResult =
-  | { kind: "ok"; position: number; refCode: string; duplicate?: boolean }
-  | { kind: "fail"; reason: string };
-
-async function insertSupabase(
-  env: Env,
-  params: {
-    email: string;
-    name: string | null;
-    note: string | null;
-    source: string;
-    referredBy: string | null;
-  },
-): Promise<InsertResult> {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
-    return { kind: "fail", reason: "supabase-not-configured" };
-  }
-  const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-    global: { headers: { "x-client-info": "lumi-bff/cf" } },
-  });
-
-  const { data: existing, error: selErr } = await supabase
-    .from("waitlist")
-    .select("position, ref_code")
-    .eq("email", params.email)
-    .maybeSingle();
-
-  if (selErr) return { kind: "fail", reason: `select: ${selErr.message}` };
-  if (existing) {
-    return {
-      kind: "ok",
-      position: existing.position,
-      refCode: existing.ref_code,
-      duplicate: true,
-    };
-  }
-
-  const { count, error: cntErr } = await supabase
-    .from("waitlist")
-    .select("id", { count: "exact", head: true });
-
-  if (cntErr) return { kind: "fail", reason: `count: ${cntErr.message}` };
-
-  const position = SEED + (count ?? 0) + 1;
-  const refCode = randomRef();
-
-  const { error: insErr } = await supabase.from("waitlist").insert({
-    email: params.email,
-    name: params.name,
-    note: params.note,
-    source: params.source,
-    referred_by: params.referredBy,
-    ref_code: refCode,
-    position,
-  });
-
-  if (insErr) return { kind: "fail", reason: `insert: ${insErr.message}` };
-  return { kind: "ok", position, refCode };
-}
-
-async function sendWelcomeEmail(
-  apiKey: string,
-  payload: {
-    to: string;
-    name: string | null;
-    position: number;
-    refCode: string;
-    duplicate: boolean;
-  },
-) {
-  const params = {
-    name: payload.name,
-    email: payload.to,
-    position: payload.position,
-    refCode: payload.refCode,
-    duplicate: payload.duplicate,
-  };
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "Lumi <hello@lumi.estate>",
-      to: [payload.to],
-      subject: renderWelcomeSubject(params),
-      html: renderWelcomeHtml(params),
-      text: renderWelcomeText(params),
-      reply_to: "hello@lumi.estate",
-    }),
-  });
-  if (!res.ok) {
-    console.warn("[waitlist] resend failed:", res.status, await res.text());
-  }
-}
-
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
   let body: Record<string, unknown>;
@@ -196,8 +186,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const turnstileToken = body.turnstileToken ? String(body.turnstileToken) : null;
   const hp = body.hp ? String(body.hp) : "";
 
+  // Honeypot — pretend success, deliver nothing.
   if (hp) {
-    return Response.json({ ok: true, position: 1, refCode: "bot" });
+    return Response.json({ ok: true });
   }
   if (!email || !emailRe.test(email)) {
     return Response.json({ error: "Please enter a valid email." }, { status: 400 });
@@ -216,68 +207,32 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
   }
 
-  const result = await insertSupabase(env, { email, name, note, source, referredBy });
+  const lead: Lead = { email, name, note, source, referredBy };
 
-  if (result.kind === "fail") {
-    console.error("[waitlist] supabase failed, email only in logs:", {
-      email,
-      source,
-      referredBy,
-      reason: result.reason,
-    });
-    return Response.json({
-      ok: true,
-      position: SEED + 1,
-      refCode: randomRef(),
-      degraded: true,
-    });
-  }
-
+  // Deliver to the owner. Telegram is the guaranteed channel; email is added
+  // when Resend is configured. A courtesy welcome goes to the applicant too.
+  const tg = await notifyTelegram(env, lead);
+  let ownerMail = false;
   if (env.RESEND_API_KEY) {
-    try {
-      await sendWelcomeEmail(env.RESEND_API_KEY, {
-        to: email,
-        name,
-        position: result.position,
-        refCode: result.refCode,
-        duplicate: !!result.duplicate,
-      });
-    } catch (e) {
-      console.warn(
-        "[waitlist] welcome email exception:",
-        e instanceof Error ? e.message : String(e),
-      );
-    }
+    ownerMail = await notifyOwnerEmail(
+      env.RESEND_API_KEY,
+      env.OWNER_EMAIL || OWNER_EMAIL_FALLBACK,
+      lead,
+    );
+    await sendWelcomeEmail(env.RESEND_API_KEY, lead);
   }
 
-  await notifyTelegram(env, {
-    email,
-    name,
-    note,
-    source,
-    position: result.position,
-    duplicate: !!result.duplicate,
-    referredBy,
-  });
+  if (!tg && !ownerMail) {
+    // No channel accepted the lead — surface it loudly so it can be recovered
+    // from logs and the misconfiguration gets fixed.
+    console.error("[waitlist] lead not delivered via any channel:", JSON.stringify(lead));
+    return Response.json({ ok: true, degraded: true });
+  }
 
-  return Response.json({
-    ok: true,
-    position: result.position,
-    refCode: result.refCode,
-    ...(result.duplicate ? { duplicate: true } : {}),
-  });
+  return Response.json({ ok: true });
 };
 
-export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const { env } = context;
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
-    return Response.json({ count: 0 });
-  }
-  const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  const { count } = await supabase
-    .from("waitlist")
-    .select("id", { count: "exact", head: true });
-  return Response.json({ count: count ?? 0 });
+// Lightweight liveness for the deploy smoke test. No datastore to query.
+export const onRequestGet: PagesFunction<Env> = async () => {
+  return Response.json({ ok: true });
 };

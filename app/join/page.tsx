@@ -8,7 +8,7 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = {
   title: "Join the waitlist",
   description:
-    "Join the Lumi private beta. Invites go out in waves — sign up, get your place in the queue, and move up by referring other agents.",
+    "Join the Lumi private beta. Invites go out in waves — sign up with your email, we confirm your spot, and reach out when your invite is ready.",
   alternates: { canonical: "https://lumi.estate/join" },
 };
 
@@ -20,8 +20,8 @@ const steps = [
   },
   {
     n: "02",
-    title: "You get a place and a link",
-    desc: "Your position in the queue shows up right away, with a personal referral link. Every agent who joins through it moves you up.",
+    title: "You get a confirmation",
+    desc: "We email you the moment you sign up to confirm you're on the list. Nothing to check, nothing to share — we come to you.",
   },
   {
     n: "03",

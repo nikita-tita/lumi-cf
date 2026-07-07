@@ -9,8 +9,8 @@ const steps = [
   },
   {
     n: "02",
-    title: "Get your place and a referral link",
-    desc: "You'll see your position right away. Share your link — every agent who joins through it moves you up the list.",
+    title: "Get a confirmation, not a dashboard",
+    desc: "The moment you sign up we email you to confirm you're on the list. Nothing to check, nothing to share — we come to you.",
   },
   {
     n: "03",
