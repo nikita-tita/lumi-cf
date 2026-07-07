@@ -43,8 +43,9 @@ jobs:
           WAITLIST_URL: "https://lumi.estate/api/waitlist"
         run: |
           set -e
-          # CF Pages needs ~20-30s to propagate after deploy completes
-          sleep 30
+          # CF Pages Functions take a while to propagate to the edge after a
+          # deploy — poll instead of a single fixed sleep to avoid flaky fails.
+          sleep 20
 
           echo "-> apex"
           code=$(curl -s -o /dev/null -m 15 -w "%{http_code}" "$APEX_URL")
@@ -53,11 +54,19 @@ jobs:
             exit 1
           fi
 
-          echo "-> waitlist GET"
-          body=$(curl -s -m 15 "$WAITLIST_URL")
-          if ! echo "$body" | grep -q '"ok":true'; then
-            echo "FAIL: waitlist API returned unexpected body"
-            echo "Response: $body"
+          echo "-> waitlist GET (poll until propagated)"
+          ok=""
+          for i in $(seq 1 12); do
+            body=$(curl -s -m 15 "$WAITLIST_URL" || true)
+            if echo "$body" | grep -q '"ok":true'; then
+              ok="1"
+              break
+            fi
+            echo "attempt $i: not ready ($body) — waiting 10s"
+            sleep 10
+          done
+          if [ -z "$ok" ]; then
+            echo "FAIL: waitlist API never returned ok:true (last: $body)"
             exit 1
           fi
 
