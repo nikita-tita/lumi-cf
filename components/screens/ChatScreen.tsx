@@ -8,18 +8,27 @@ import {
   X,
   CalendarClock,
   MapPin,
+  FileText,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { AppShell } from "./AppShell";
 
-export function ChatScreen() {
+/**
+ * "full" shows the whole conversation and is the hero/marketing screen.
+ * "brief" and "docs" narrow it to a single beat so the day-timeline can show
+ * two different chats without one spoiling the other's punchline.
+ */
+export type ChatVariant = "full" | "brief" | "docs";
+
+export function ChatScreen({ variant = "full" }: { variant?: ChatVariant }) {
+  const isDocs = variant === "docs";
   return (
     <AppShell active="chat">
       <div className="h-full overflow-hidden flex flex-col">
         {/* greeting block — mirrors app GradientText header */}
         <div className="px-5 pt-3 pb-2">
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#A1A1AA]">
-            Lumi · Wednesday
+            {isDocs ? "Lumi · Documents" : "Lumi · Wednesday"}
           </p>
           <h2
             className="mt-1 text-[26px] font-bold leading-[1.05] tracking-tight"
@@ -31,34 +40,48 @@ export function ChatScreen() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Good morning, Niki.
+            {isDocs ? "Passeig de Gràcia 84" : "Good morning, Niki."}
           </h2>
           <p className="mt-1 text-[11.5px] text-[#52525B] leading-snug">
-            Two showings · three leads need a nudge.
+            {isDocs
+              ? "12 documents · upload once, ask anytime."
+              : "Two showings · three leads need a nudge."}
           </p>
         </div>
 
         {/* scope chip + context */}
         <div className="px-5 pt-1 pb-1 flex items-center gap-1.5">
-          <ScopeChip />
+          {isDocs ? <DocChip /> : <ScopeChip />}
         </div>
 
         {/* messages */}
         <div className="flex-1 overflow-hidden px-3 pt-1 pb-14 space-y-2">
-          <UserBubble index={0}>
-            Tomorrow 11am showing at Passeig de Gràcia 84 with Clara Ruiz. She
-            wants to bring her partner.
-          </UserBubble>
+          {variant !== "docs" && (
+            <>
+              <UserBubble index={0}>
+                Tomorrow 11am showing at Passeig de Gràcia 84 with Clara Ruiz. She
+                wants to bring her partner.
+              </UserBubble>
 
-          <AssistantBubble index={1}>
-            Got it — creating the showing.
-          </AssistantBubble>
+              <AssistantBubble index={1}>
+                Got it — creating the showing.
+              </AssistantBubble>
 
-          <EventCardBubble index={2} />
+              <EventCardBubble index={2} />
+            </>
+          )}
 
-          <UserBubble index={3}>What&rsquo;s the HOA for Apt 4?</UserBubble>
+          {variant !== "brief" && (
+            <>
+              {isDocs && <DocSourceBubble index={0} />}
 
-          <DocumentsAnswerBubble index={4} />
+              <UserBubble index={isDocs ? 1 : 3}>
+                What&rsquo;s the HOA for Apt 4?
+              </UserBubble>
+
+              <DocumentsAnswerBubble index={isDocs ? 2 : 4} />
+            </>
+          )}
         </div>
 
         {/* composer */}
@@ -94,6 +117,45 @@ function ScopeChip() {
       </span>
       <X size={9} className="text-[#A1A1AA] ml-0.5" strokeWidth={2.6} />
     </div>
+  );
+}
+
+function DocChip() {
+  return (
+    <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EFF6FF] border border-[#2563EB]/20 pl-1.5 pr-2 py-0.5">
+      <FileText size={9} className="text-accent" strokeWidth={2.6} />
+      <span className="text-[9.5px] font-semibold text-accent tracking-tight">
+        HOA statement.pdf
+      </span>
+      <X size={9} className="text-[#A1A1AA] ml-0.5" strokeWidth={2.6} />
+    </div>
+  );
+}
+
+function DocSourceBubble({ index }: { index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 + index * 0.08, duration: 0.35 }}
+      className="flex items-start gap-1.5"
+    >
+      <div className="shrink-0 mt-0.5 w-5 h-5" />
+      <div className="flex-1 rounded-[16px] border border-[#E2E8F0] bg-[#FAFAFA] p-2.5">
+        <div className="flex items-center gap-1.5">
+          <FileText size={10} className="text-accent" strokeWidth={2.4} />
+          <span className="text-[9px] font-bold uppercase tracking-wider text-accent-2">
+            Doc 12 · indexed
+          </span>
+        </div>
+        <h3 className="mt-1 text-[12.5px] font-semibold text-[#09090B] leading-tight">
+          HOA statement · Gràcia 84
+        </h3>
+        <p className="mt-1 text-[10px] text-[#52525B]">
+          14 pages · uploaded three weeks ago
+        </p>
+      </div>
+    </motion.div>
   );
 }
 

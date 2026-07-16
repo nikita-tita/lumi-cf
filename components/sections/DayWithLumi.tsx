@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { ChatScreen } from "@/components/screens/ChatScreen";
 import { TodosScreen } from "@/components/screens/TodosScreen";
-import { CalendarScreen } from "@/components/screens/CalendarScreen";
 import { ClientsScreen } from "@/components/screens/ClientsScreen";
 
 type Scene = {
@@ -22,7 +21,7 @@ const scenes: Scene[] = [
     tag: "Morning brief",
     title: "\u201cWhat\u2019s today look like?\u201d",
     desc: "Ask Lumi in chat. Two showings, three leads going cold, one contract ready for signature. Your \u20ac12.4M pipeline summarised in one message — before your first coffee.",
-    Screen: ChatScreen,
+    Screen: () => <ChatScreen variant="brief" />,
   },
   {
     time: "11:30",
@@ -36,7 +35,7 @@ const scenes: Scene[] = [
     tag: "Ask the document",
     title: "\u201cWhat\u2019s the HOA on Apt 4?\u201d",
     desc: "Upload once, ask forever. Lumi reads the PDF, cites the line, and gives you the number in chat — \u20ac210/month, covers elevator and concierge. No more \u201clet me get back to you\u201d.",
-    Screen: CalendarScreen,
+    Screen: () => <ChatScreen variant="docs" />,
   },
   {
     time: "21:00",
