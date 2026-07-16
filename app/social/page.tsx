@@ -151,7 +151,7 @@ export default function SocialLinksPage() {
           }}
         >
           <Image
-            src="/icon.png"
+            src="/brand-icon.png"
             alt="Lumi logo"
             width={112}
             height={112}

@@ -226,13 +226,31 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // No channel accepted the lead — surface it loudly so it can be recovered
     // from logs and the misconfiguration gets fixed.
     console.error("[waitlist] lead not delivered via any channel:", JSON.stringify(lead));
-    return Response.json({ ok: true, degraded: true });
+    // Must not be 2xx. The client decides success from res.ok, so answering 200
+    // here shows "You're in" for a signup that reached nobody — which is how
+    // every lead was lost while the old Supabase path was dead.
+    return Response.json(
+      {
+        ok: false,
+        error: `Something broke on our side and your signup didn't reach us. Please email ${OWNER_EMAIL_FALLBACK} and we'll add you by hand.`,
+      },
+      { status: 502 },
+    );
   }
 
   return Response.json({ ok: true });
 };
 
-// Lightweight liveness for the deploy smoke test. No datastore to query.
-export const onRequestGet: PagesFunction<Env> = async () => {
-  return Response.json({ ok: true });
+// Liveness for the deploy smoke test. There is no datastore to query, so the
+// thing worth asserting is that a delivery channel exists at all — the previous
+// handler hardcoded ok:true and stayed green with every channel dead.
+// Config presence only, no outbound call: this endpoint is public, and pinging
+// Telegram per request would hand out a free way to burn its rate limit.
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  const { env } = context;
+  const telegram = Boolean(env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID);
+  const email = Boolean(env.RESEND_API_KEY);
+  const ok = telegram || email;
+  if (!ok) console.error("[waitlist] no delivery channel is configured");
+  return Response.json({ ok }, { status: ok ? 200 : 503 });
 };

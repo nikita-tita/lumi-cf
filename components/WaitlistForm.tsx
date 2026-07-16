@@ -97,7 +97,12 @@ export function WaitlistForm({
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      // res.ok alone is not enough: the endpoint has answered 200 for a lead it
+      // delivered nowhere. Treat an explicit failure flag as failure too, so a
+      // regression on the server can't make us claim success again.
+      if (!res.ok || data?.ok === false || data?.degraded) {
+        throw new Error(data?.error || "Something went wrong.");
+      }
       setState({ kind: "success" });
       track("waitlist_submitted", { source: pathname || "/" });
     } catch (err) {

@@ -19,7 +19,7 @@ export default function HomePage() {
         "@type": "Organization",
         name: "Lumi",
         url: "https://lumi.estate",
-        logo: "https://lumi.estate/icon.png",
+        logo: "https://lumi.estate/brand-icon.png",
         description:
           "Lumi is the AI calendar and CRM built for real estate agents. Voice-first capture, offline pipeline, built-in deal tracking.",
       },
