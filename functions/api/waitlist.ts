@@ -197,11 +197,32 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // Turnstile is enforced only if a secret is configured. Without secret —
   // skipped (dev / initial setup). With secret — required and verified.
   if (env.TURNSTILE_SECRET_KEY) {
+    // No token at all is a different failure from a bad one. The widget only
+    // renders when NEXT_PUBLIC_TURNSTILE_SITE_KEY was set at build time, and
+    // nothing ties that to this secret — so enforcing here while the site key
+    // is unset 403s every single signup. Same silence if an extension blocks
+    // the Turnstile script. Either way "reload the page" is useless advice, so
+    // hand over an address that works instead.
+    if (!turnstileToken) {
+      console.error(
+        "[waitlist] turnstile enforced but the client sent no token — is NEXT_PUBLIC_TURNSTILE_SITE_KEY set for the build?",
+      );
+      return Response.json(
+        {
+          ok: false,
+          error: `We couldn't run the anti-spam check — it may be blocked by a browser extension. Please email ${OWNER_EMAIL_FALLBACK} and we'll add you by hand.`,
+        },
+        { status: 403 },
+      );
+    }
     const ip = request.headers.get("CF-Connecting-IP");
     const ok = await verifyTurnstile(env.TURNSTILE_SECRET_KEY, turnstileToken, ip);
     if (!ok) {
       return Response.json(
-        { error: "Captcha verification failed. Please reload the page and try again." },
+        {
+          ok: false,
+          error: "Captcha verification failed. Please reload the page and try again.",
+        },
         { status: 403 },
       );
     }

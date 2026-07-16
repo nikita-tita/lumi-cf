@@ -108,6 +108,60 @@ describe("POST /api/waitlist — delivery contract", () => {
   });
 });
 
+describe("POST /api/waitlist — Turnstile", () => {
+  const TURNSTILE_ENV = { ...TG_ENV, TURNSTILE_SECRET_KEY: "secret" };
+
+  it("gives a way through when the client sent no token", async () => {
+    // The trap: the secret gates enforcement here, but the widget only renders
+    // when the site key was set at build time. Set one without the other and
+    // every signup 403s — so the message must not be "reload the page".
+    const fetchMock = mockFetch(true);
+    global.fetch = fetchMock as unknown as typeof fetch;
+    const res = await post({ email: "agent@example.com" }, TURNSTILE_ENV);
+
+    expect(res.status).toBe(403);
+    const body = await bodyOf(res);
+    expect(body.error).toContain("@");
+    expect(body.error).not.toMatch(/reload/i);
+    // No point asking Cloudflare to verify a token that does not exist.
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("rejects a token Cloudflare does not accept", async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ success: false }),
+      text: async () => "",
+    }) as unknown as typeof fetch;
+    const res = await post(
+      { email: "agent@example.com", turnstileToken: "forged" },
+      TURNSTILE_ENV,
+    );
+    expect(res.status).toBe(403);
+  });
+
+  it("delivers once Cloudflare accepts the token", async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ success: true }),
+      text: async () => "",
+    }) as unknown as typeof fetch;
+    const res = await post(
+      { email: "agent@example.com", turnstileToken: "good" },
+      TURNSTILE_ENV,
+    );
+    expect(res.status).toBe(200);
+  });
+
+  it("stays out of the way while no secret is configured", async () => {
+    global.fetch = mockFetch(true) as unknown as typeof fetch;
+    const res = await post({ email: "agent@example.com" }, { ...TG_ENV });
+    expect(res.status).toBe(200);
+  });
+});
+
 describe("GET /api/waitlist — what the deploy smoke test polls", () => {
   it("goes red when no delivery channel is configured", async () => {
     const res = await get({});
