@@ -42,7 +42,7 @@ const scenes: Scene[] = [
     time: "21:00",
     tag: "Evening digest",
     title: "14 active leads. 3 need attention tomorrow.",
-    desc: "Lumi shows you who&apos;s ready to move and who\u2019s going silent. Drafts the morning messages right inside the chat. Tap approve, close the app.",
+    desc: "Lumi shows you who\u2019s ready to move and who\u2019s going silent. Drafts the morning messages right inside the chat. Tap approve, close the app.",
     Screen: ClientsScreen,
   },
 ];
