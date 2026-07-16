@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "One plan, everything included. €9/month after a 7-day free trial. No tiers, no feature-gating, no surprises.",
+  alternates: { canonical: "https://lumi.estate/pricing" },
 };
 
 const included = [
@@ -31,7 +32,7 @@ const faq = [
   },
   {
     q: "Can I cancel anytime?",
-    a: "Yes. The subscription is a standard Apple subscription — cancel in App Store settings in two taps. You keep access until the end of the paid period.",
+    a: "Yes, in two taps — no email, no retention call. You keep access until the end of the paid period.",
   },
   {
     q: "Why €9?",
@@ -90,9 +91,8 @@ export default function PricingPage() {
             </ul>
 
             <p className="mt-8 text-xs text-text-mute">
-              Billed monthly via Apple subscription · Cancel anytime in App
-              Store settings · Prices may vary slightly by region due to App
-              Store currency conversion.
+              Billed monthly · Cancel anytime · Prices may vary slightly by
+              region due to currency conversion.
             </p>
           </div>
 

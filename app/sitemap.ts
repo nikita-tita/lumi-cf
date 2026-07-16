@@ -2,9 +2,12 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
+// No lastModified: we don't track per-page edit dates, and every way of faking
+// one is worse than omitting it. A hardcoded date goes stale the next commit;
+// the build date claims all 45 pages changed on every deploy. Google ignores
+// lastmod it finds inaccurate, so a wrong value teaches it to distrust ours.
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://lumi.estate";
-  const lastModified = new Date("2026-05-24T00:00:00.000Z");
   const paths = [
     "",
     "/features",
@@ -46,15 +49,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/prompt-draft",
     "/prompt-scorer",
     "/prompt-voice",
-    "/social",
+    // /social is deliberately noindex (link-in-bio) — listing it here would
+    // invite the crawler to a page that turns it away.
     "/press",
     "/privacy",
     "/cookies",
     "/terms",
+    "/account/delete",
   ];
   return paths.map((p) => ({
     url: `${base}${p}`,
-    lastModified,
     changeFrequency: "weekly" as const,
     priority: p === "" ? 1 : 0.7,
   }));

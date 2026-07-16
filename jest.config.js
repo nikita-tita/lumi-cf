@@ -1,9 +1,9 @@
 /**
- * Jest for Lumi landing / BFF pure-helper tests.
+ * Jest for the waitlist Pages Function — the one path where a silent failure
+ * costs a real lead. Pure request/response, no React or Next runtime needed.
  *
- * Covers `lib/chunk.ts`, `lib/embeddings.ts`, `lib/ai-proxy.ts` — all
- * server-side pure helpers that don't need a React/Next runtime. Route
- * handlers are covered end-to-end via `next build` + smoke-deploy.
+ * Everything else on this site is static pages, covered by `next build` and
+ * the deploy smoke test.
  */
 module.exports = {
   preset: 'ts-jest',

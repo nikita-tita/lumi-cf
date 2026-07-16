@@ -5,7 +5,7 @@ export const faqItems = [
   },
   {
     q: "How much will it cost?",
-    a: "€9/month after a 7-day free trial. One plan, everything included — chat, pipeline, Documents Q&A, offline mode. No tiers, no feature-gating, cancel anytime in App Store settings.",
+    a: "€9/month after a 7-day free trial. One plan, everything included — chat, pipeline, Documents Q&A, offline mode. No tiers, no feature-gating, cancel anytime.",
   },
   {
     q: "Which regions and currencies are supported?",

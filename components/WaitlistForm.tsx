@@ -26,6 +26,14 @@ type State =
   | { kind: "success" }
   | { kind: "error"; message: string };
 
+/** What /api/waitlist answers. Every field is optional — an error page or a
+ * future handler can put anything on the wire, so nothing here is assumed. */
+type WaitlistResponse = {
+  ok?: boolean;
+  degraded?: boolean;
+  error?: string;
+};
+
 export function WaitlistForm({
   variant = "hero",
   showNote = false,
@@ -36,6 +44,9 @@ export function WaitlistForm({
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
+  // Honeypot. Stays empty for humans (the field is display:none), so anything
+  // in it means a bot filled the DOM blind — the server drops those.
+  const [hp, setHp] = useState("");
   const [state, setState] = useState<State>({ kind: "idle" });
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const turnstileRef = useRef<HTMLDivElement>(null);
@@ -93,10 +104,10 @@ export function WaitlistForm({
           source: pathname || "/",
           referredBy,
           turnstileToken,
-          hp: "", // honeypot
+          hp,
         }),
       });
-      const data = await res.json();
+      const data = (await res.json()) as WaitlistResponse;
       // res.ok alone is not enough: the endpoint has answered 200 for a lead it
       // delivered nowhere. Treat an explicit failure flag as failure too, so a
       // regression on the server can't make us claim success again.
@@ -207,6 +218,8 @@ export function WaitlistForm({
         autoComplete="off"
         className="hidden"
         aria-hidden="true"
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
       />
 
       {/* Cloudflare Turnstile (loads script + container only when site key is configured) */}
