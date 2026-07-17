@@ -324,6 +324,20 @@ describe("страница", () => {
     expect(initialsOf("Maria")).toBe("M");
   });
 
+  /**
+   * Формат, в котором аватар придёт из Supabase Storage (public bucket
+   * `agent-photos`). Ссылка постоянная и без подписи — иначе она протухла бы
+   * внутри страницы, которую CF держит на edge до суток, и в og:image,
+   * который мессенджеры кэшируют неделями.
+   */
+  it("принимает постоянную ссылку из public-bucket Storage", () => {
+    const url =
+      "https://zxfolukuthecexxuolmd.supabase.co/storage/v1/object/public/agent-photos/user-42/a1b2c3.jpg";
+    const html = renderProfileHtml({ ...PROFILE, avatar_url: url }, RENDER_OPTS);
+    expect(html).toContain(`<img class="avatar" src="${url}"`);
+    expect(html).toContain(`<meta property="og:image" content="${url}"/>`);
+  });
+
   it("аватар не по https в src не попадает", () => {
     const html = renderProfileHtml(
       { ...PROFILE, avatar_url: "javascript:alert(1)" },
