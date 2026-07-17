@@ -424,7 +424,8 @@ describe("GET /agent/<slug>", () => {
     const res = await get("kto-to");
 
     expect(res.status).toBe(404);
-    expect(await res.text()).toContain("This page isn't here");
+    // escapeHtml — потому что апостроф в разметке уезжает как &#39;.
+    expect(await res.text()).toContain(escapeHtml("This page isn't here"));
   });
 
   /** Ретайренный slug: ссылка уже у клиентов, она обязана вести на новую. */
@@ -451,6 +452,24 @@ describe("GET /agent/<slug>", () => {
 
     expect(res.status).toBe(503);
     expect(res.headers.get("cache-control")).toBe("no-store");
+  });
+
+  /**
+   * Кода мало: клиент читает текст, а не статус. «Страницы нет» на временной
+   * аварии говорит, что агента не существует, — а он жив, и это его заявка.
+   */
+  it("на аварии говорит «зайдите позже», а не «страницы нет»", async () => {
+    global.fetch = jest
+      .fn()
+      .mockResolvedValue(bffResponse({ error: "query_failed" }, 502)) as unknown as typeof fetch;
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    const html = await (await get("maria-silva")).text();
+
+    expect(html).toContain("try again in a minute");
+    // Через escapeHtml, иначе сравнение с сырым апострофом всегда истинно и
+    // тест зеленеет, даже если сюда вернётся текст 404-страницы.
+    expect(html).not.toContain(escapeHtml("This page isn't here"));
+    expect(html).not.toContain("taken down");
   });
 
   it("на недоступный BFF отвечает 503, а не падает", async () => {

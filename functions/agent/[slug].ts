@@ -17,6 +17,7 @@ import {
   buildVCard,
   renderNotFoundHtml,
   renderProfileHtml,
+  renderUnavailableHtml,
   type AgentProfileDto,
 } from "../../lib/agent-card";
 
@@ -48,7 +49,7 @@ function notFound(): Response {
  * временная, её не индексируют и не кэшируют.
  */
 function upstreamDown(): Response {
-  return new Response(renderNotFoundHtml(), {
+  return new Response(renderUnavailableHtml(), {
     status: 503,
     headers: { ...HTML_HEADERS, "cache-control": "no-store", "retry-after": "30" },
   });

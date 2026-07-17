@@ -577,18 +577,18 @@ ${formSection()}
 </html>`;
 }
 
-/**
- * 404. Неопубликованный и несуществующий профиль отдают одну и ту же страницу —
- * ровно как BFF отдаёт им один и тот же 404 (§6): иначе страница становится
- * оракулом «slug занят, но ещё не опубликован».
- */
-export function renderNotFoundHtml(siteOrigin = SITE_ORIGIN): string {
+function renderStatusHtml(
+  title: string,
+  heading: string,
+  text: string,
+  siteOrigin: string,
+): string {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Page not found — Lumi</title>
+<title>${escapeHtml(title)} — Lumi</title>
 <meta name="robots" content="noindex, nofollow"/>
 <style>${STYLES}
 .mid{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
@@ -597,10 +597,41 @@ export function renderNotFoundHtml(siteOrigin = SITE_ORIGIN): string {
 <body>
 <div class="wrap"><div class="mid">
 ${sparkSvg(34)}
-<h1>This page isn't here</h1>
-<p class="bio">The agent's card may have been moved or taken down.</p>
+<h1>${escapeHtml(heading)}</h1>
+<p class="bio">${escapeHtml(text)}</p>
 <a class="btn b-ghost" style="padding:0 20px" href="${escapeHtml(siteOrigin)}" rel="noopener">Go to Lumi</a>
 </div></div>
 </body>
 </html>`;
+}
+
+/**
+ * 404. Неопубликованный и несуществующий профиль отдают одну и ту же страницу —
+ * ровно как BFF отдаёт им один и тот же 404 (§6): иначе страница становится
+ * оракулом «slug занят, но ещё не опубликован».
+ */
+export function renderNotFoundHtml(siteOrigin = SITE_ORIGIN): string {
+  return renderStatusHtml(
+    "Page not found",
+    "This page isn't here",
+    "The agent's card may have been moved or taken down.",
+    siteOrigin,
+  );
+}
+
+/**
+ * 503. Отдельная страница, а не та же, что у 404, — и это не косметика.
+ *
+ * Код ответа тут временный, а текст «страницы нет» сказал бы клиенту, что
+ * агента не существует, хотя тот жив и просто прилёг апстрим. Клиент пришёл
+ * по ссылке, которую агент разослал лично: «зайдите через минуту» и «такого
+ * агента нет» — разные сообщения, и второе стоит агенту заявки.
+ */
+export function renderUnavailableHtml(siteOrigin = SITE_ORIGIN): string {
+  return renderStatusHtml(
+    "Temporarily unavailable",
+    "This card is taking a break",
+    "We couldn't load it just now. Please try again in a minute — the agent's page is still there.",
+    siteOrigin,
+  );
 }
