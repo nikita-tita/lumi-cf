@@ -1,0 +1,42 @@
+name: Public agent card audit
+
+# Настоящий (блокирующий, но не для деплоя) гейт для scripts/audit-card.js.
+#
+# В deploy.yml тот же скрипт стоит как informational-шаг (continue-on-error) —
+# намеренно не блокирует прод: `lib/agent-card.ts` рендерится Pages Function из
+# живого BFF-ответа (`output: "export"`, статики для этой страницы нет), так
+# что честный пре-деплой прогон означал бы сеть на прод-BFF и прод-данные на
+# каждый пуш в main. Здесь — тот же прогон по расписанию + вручную, и здесь он
+# действительно роняет job при находках, так что регресс не проходит незамеченным.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # раз в сутки, время смещено от круглого часа нарочно
+  workflow_dispatch:
+    inputs:
+      card_url:
+        description: "URL визитки для замера"
+        required: false
+        default: "https://lumi.estate/agent/amina-hassan-dubai"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit live agent card
+        env:
+          CARD_URL: ${{ inputs.card_url || 'https://lumi.estate/agent/amina-hassan-dubai' }}
+        run: npm run audit:card -- "$CARD_URL"

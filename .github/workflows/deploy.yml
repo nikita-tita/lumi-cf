@@ -79,3 +79,19 @@ jobs:
           fi
 
           echo "smoke test passed"
+
+      # Не блокирующий шаг, сознательно. `lib/agent-card.ts` — Pages Function
+      # (`output: "export"`, SSR тут нет), рендерит HTML на лету из живого
+      # BFF-ответа: у `npm run build` нет статического артефакта этой страницы,
+      # который можно было бы замерить ДО деплоя без сети и без чужих прод-
+      # данных. Поднимать здесь Chromium + бить по прод-БФФ ради каждого пуша
+      # в main — дорогая и хрупкая гарантия ради вещи, которую честнее держать
+      # отдельно: см. `.github/workflows/audit-card.yml` (расписание/вручную,
+      # там же и падает по-настоящему). Здесь — только видимость в логах.
+      - name: Card audit (informational — см. audit-card.yml)
+        continue-on-error: true
+        env:
+          CARD_URL: "https://lumi.estate/agent/amina-hassan-dubai"
+        run: |
+          npx playwright install --with-deps chromium
+          npm run audit:card -- "$CARD_URL"
