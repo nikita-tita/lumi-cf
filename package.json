@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "jest",
+    "test:audit-card": "jest --config jest.config.audit-card.js",
     "deploy": "next build && wrangler pages deploy out --project-name=lumi --branch=main",
     "audit:card": "node scripts/audit-card.js"
   },
