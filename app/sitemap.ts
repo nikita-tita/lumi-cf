@@ -49,6 +49,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/prompt-draft",
     "/prompt-scorer",
     "/prompt-voice",
+    "/prompt-plan",
+    "/prompt-fast",
+    "/prompt-sunday",
     // /social is deliberately noindex (link-in-bio) — listing it here would
     // invite the crawler to a page that turns it away.
     "/press",
