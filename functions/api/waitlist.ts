@@ -44,12 +44,19 @@ function escapeHtml(s: string): string {
 // the lead actually reached Telegram so the caller can detect total failure.
 async function notifyTelegram(env: Env, lead: Lead): Promise<boolean> {
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
+  // Маркировка (29.08.2026). В этот чат пишут несколько проектов сразу, и все
+  // начинали сообщение словом «заявка» — разобрать, с какого сайта пришёл лид,
+  // было нельзя. Первая строка называет проект, последняя несёт хэштеги:
+  // в Telegram они кликабельны, это готовый фильтр по чату.
+  // Пустую строку-разделитель сюда класть нельзя — .filter(Boolean) съест ""
+  // вместе с null, и разделитель молча исчезнет.
   const lines = [
-    "🏠 Новая заявка в waitlist",
+    "🏠 Lumi · waitlist",
     lead.email,
     lead.name ? `Имя: ${lead.name}` : null,
     lead.note ? `Заметка: ${lead.note}` : null,
     `Источник: ${lead.source}${lead.referredBy ? ` · реф: ${lead.referredBy}` : ""}`,
+    "#lumi #waitlist",
   ].filter(Boolean);
   try {
     const res = await fetch(
